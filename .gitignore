@@ -1,0 +1,18 @@
+# Log files
+*.log
+form-final.log
+email-final.log
+google-forms-final.log
+
+# Temporary files
+/tmp/
+form_lock_*
+*.lock
+
+# Backup directories
+backup_*/
+old_versions/
+
+# System files
+.DS_Store
+Thumbs.db
