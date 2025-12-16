@@ -1,0 +1,43 @@
+<style>
+/* ДИАГНОСТИКА: Подсветка всех элементов */
+* {
+  outline: 1px solid rgba(255,0,0,0.1) !important;
+}
+
+/* Подсветка элементов с position: absolute */
+[style*="position: absolute"],
+.position-absolute,
+.category-content {
+  outline: 3px solid yellow !important;
+  background: rgba(255,255,0,0.2) !important;
+}
+
+/* Подсветка родительских контейнеров */
+.category-square,
+.position-relative {
+  outline: 3px solid blue !important;
+  background: rgba(0,0,255,0.1) !important;
+}
+
+/* Показываем скрытые элементы */
+[style*="display: none"],
+[style*="visibility: hidden"],
+[style*="opacity: 0"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  outline: 3px solid red !important;
+  background: rgba(255,0,0,0.3) !important;
+}
+
+/* Делаем все тексты черными для видимости */
+* {
+  color: black !important;
+  text-shadow: 0 0 2px white !important;
+}
+
+/* Делаем все фоны полупрозрачными */
+body, div, section, header, footer, main, article, aside {
+  background: rgba(255,255,255,0.9) !important;
+}
+</style>

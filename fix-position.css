@@ -1,0 +1,16 @@
+<style>
+/* ФИКС ДЛЯ КАРТОЧЕК - ОБЯЗАТЕЛЬНО! */
+.category-square {
+    position: relative !important;
+    overflow: hidden;
+    height: 100%;
+}
+
+/* Гарантируем, что изображение занимает всю карточку */
+.category-square img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+</style>

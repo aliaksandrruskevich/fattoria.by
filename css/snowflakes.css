@@ -1,0 +1,106 @@
+/* Простые белые/бирюзовые снежинки */
+#snowflakes-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9997;
+    overflow: hidden;
+}
+
+.snowflake {
+    position: absolute;
+    top: -50px;
+    color: #e0f7fa; /* Бирюзово-белый */
+    opacity: 0.8;
+    user-select: none;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    font-weight: normal;
+    text-shadow: none; /* Убираем тени */
+    filter: none; /* Убираем фильтры */
+}
+
+/* Размеры */
+.snowflake.tiny { font-size: 16px; opacity: 0.6; }
+.snowflake.small { font-size: 22px; opacity: 0.7; }
+.snowflake.medium { font-size: 30px; opacity: 0.8; }
+.snowflake.large { font-size: 40px; opacity: 0.7; }
+
+/* Альтернативный цвет - чисто белый */
+.snowflake.white { color: #ffffff; }
+.snowflake.light-blue { color: #b3e5fc; }
+.snowflake.cyan { color: #4dd0e1; }
+
+/* Скорости */
+.snowflake.slow { animation-duration: 15s; }
+.snowflake.medium-speed { animation-duration: 10s; }
+.snowflake.fast { animation-duration: 7s; }
+
+/* Простые анимации */
+@keyframes snow-fall-simple {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+@keyframes snow-fall-drift {
+    0% {
+        transform: translateY(-50px) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) translateX(80px);
+        opacity: 0;
+    }
+}
+
+@keyframes snow-fall-rotate {
+    0% {
+        transform: translateY(-50px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+/* Для мобильных - еще проще */
+@media (max-width: 768px) {
+    .snowflake.tiny { font-size: 14px; }
+    .snowflake.small { font-size: 18px; }
+    .snowflake.medium { font-size: 24px; }
+    .snowflake.large { font-size: 32px; }
+    
+    /* На мобильных только одна анимация */
+    .snowflake {
+        animation-name: snow-fall-simple !important;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
+    .snowflake {
+        opacity: 0.7;
+    }
+}

@@ -1,18 +1,50 @@
-# Log files
+# Бэкапы и временные файлы
+*.backup*
+*.bak*
+*.tmp
+*.temp
+*.old
+*.new
+*.original
+
+# Логи
 *.log
-form-final.log
-email-final.log
-google-forms-final.log
+logs/
+error.log
+access.log
 
-# Temporary files
-/tmp/
-form_lock_*
-*.lock
+# Кэш и временные папки
+cache/
+tmp/
+temp/
 
-# Backup directories
-backup_*/
-old_versions/
-
-# System files
+# Системные файлы
 .DS_Store
+.idea/
+.vscode/
 Thumbs.db
+
+# Node.js
+node_modules/
+npm-debug.log
+package-lock.json
+
+# Тестовые файлы
+test*
+*test*
+
+# Конфиденциальное
+*.pem
+*.key
+.env
+config.php
+
+# Большие архивы
+*.zip
+*.tar.gz
+*.rar
+
+# IDE файлы
+*.swp
+*.swo
+*~

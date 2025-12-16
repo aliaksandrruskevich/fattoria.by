@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог о недвижимости | Fattoria</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/index-combined.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #2d1b69 0%, #1a1033 100%);
+            color: white;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+            padding: 40px 0 20px;
+        }
+        .page-title h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .page-title p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .blog-card {
+            background: #2a2a2a;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #667eea, #764ba2, #ff6b6b) 1;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: white;
+            line-height: 1.4;
+        }
+
+        .blog-excerpt {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 15px;
+        }
+
+        .read-more {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        .read-more:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Футер на всю ширину */
+        #footer-placeholder {
+            width: 100%;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <div class="container">
+        <div class="page-title">
+            <h1>Блог о недвижимости</h1>
+            <p>Полезные статьи и советы от экспертов</p>
+        </div>
+        
+        <div class="blog-grid">
+            <article class="blog-card">
+                <h3 class="blog-title">Реальные цены на квартиры в Минске 2025</h3>
+                <p class="blog-excerpt">Статистика рынка недвижимости на 01.11.2025. Средние цены за м² по всем районам Минска.</p>
+                <div class="blog-meta">
+                    <span>27.11.2025</span>
+                    <a href="/blog-prices.html" class="read-more">Читать</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <h3 class="blog-title">Как подготовить квартиру к продаже</h3>
+                <p class="blog-excerpt">Практические советы по подготовке недвижимости к показу и увеличению ее стоимости.</p>
+                <div class="blog-meta">
+                    <span>25.11.2025</span>
+                    <a href="/blog-prepare-apartment.html" class="read-more">Читать</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <h3 class="blog-title">Новые изменения в законодательстве</h3>
+                <p class="blog-excerpt">Обзор последних изменений в законах, которые влияют на сделки с недвижимостью.</p>
+                <div class="blog-meta">
+                    <span>22.11.2025</span>
+                    <a href="/blog-law-changes.html" class="read-more">Читать</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <h3 class="blog-title">Ипотека в 2025: новые программы</h3>
+                <p class="blog-excerpt">Актуальная информация об ипотечных программах и изменениях в условиях кредитования.</p>
+                <div class="blog-meta">
+                    <span>20.11.2025</span>
+                    <a href="/blog-mortgage.html" class="read-more">Читать</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <h3 class="blog-title">Покупка вторичного жилья</h3>
+                <p class="blog-excerpt">Чек-лист для покупателей: как избежать проблем при приобретении квартиры.</p>
+                <div class="blog-meta">
+                    <span>18.11.2025</span>
+                    <a href="/blog-secondary.html" class="read-more">Читать</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <h3 class="blog-title">Тенденции рынка недвижимости 2025</h3>
+                <p class="blog-excerpt">Анализ текущей ситуации на рынке и прогнозы на ближайшее будущее от экспертов.</p>
+                <div class="blog-meta">
+                    <span>15.11.2025</span>
+                    <a href="/blog-trends.html" class="read-more">Читать</a>
+                </div>
+            </article>
+        </div>
+    </div>
+    <div id="footer-placeholder"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="js/header-loader.js" defer></script>
+    <script src="js/load-components.js" defer></script>
+    <script src="js/common.js" defer></script>
+</body>
+</html>
