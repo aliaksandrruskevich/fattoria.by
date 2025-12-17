@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.textContent = 'Отправка...';
             submitBtn.disabled = true;
             
-            fetch('/api/submit-form', {
+            fetch('/api/submit-form-universal-fixed-v2.php', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(data)

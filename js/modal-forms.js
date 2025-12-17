@@ -24,7 +24,7 @@ function handleFormSubmit(e) {
         submitBtn.disabled = true;
         
         // Отправляем на сервер
-        fetch('/api/submit-form', {
+        fetch('/api/submit-form-universal-fixed-v2.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,0 +1,110 @@
+// Мгновенная отправка форм без задержек
+document.addEventListener('DOMContentLoaded', function() {
+    // Перехватываем все формы
+//    document.addEventListener('submit', function(e) {
+        const form = e.target;
+        if (form.tagName !== 'FORM') return;
+        
+        e.preventDefault();
+        
+        const submitBtn = form.querySelector('[type="submit"]');
+        const originalText = submitBtn ? submitBtn.innerHTML : '';
+        
+        // Сразу показываем уведомление об успехе
+        showInstantSuccess();
+        
+        // Отправляем форму в фоне
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        
+        // Добавляем тип формы если не указан
+        if (!data.form_type) {
+            data.form_type = form.id || 'general_form';
+        }
+        
+        fetch('/api/submit-all-forms.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            // Уже показали успех, можно сбросить форму
+            if (result.success || result.message) {
+                form.reset();
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка отправки:', error);
+            // В случае ошибки показываем сообщение
+            showInstantError();
+        })
+        .finally(() => {
+            // Восстанавливаем кнопку
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+        
+        // Блокируем кнопку
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '✓ Отправлено';
+        }
+    });
+    
+    function showInstantSuccess() {
+        // Создаем мгновенное уведомление
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        `;
+        toast.innerHTML = '✅ Форма отправлена! Мы свяжемся с вами в ближайшее время.';
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.remove();
+        }, 5000);
+    }
+    
+    function showInstantError() {
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #dc3545;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            z-index: 10000;
+        `;
+        toast.innerHTML = '❌ Ошибка отправки. Попробуйте еще раз.';
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.remove();
+        }, 5000);
+    }
+});
+
+// Добавляем CSS анимацию
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+`;
+document.head.appendChild(style);

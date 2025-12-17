@@ -1,0 +1,41 @@
+=== ВСЕ ЖИЛЫЕ КОМПЛЕКСЫ (ЖК) ===
+https://fattoria.by/about
+https://fattoria.by/new-buildings
+https://fattoria.by/services-buyers
+https://fattoria.by/services-sellers
+https://fattoria.by/staff
+https://fattoria.by/user-agreement
+https://fattoria.by/новостройки_backup_20251211_1453/жк-вершина
+https://fattoria.by/новостройки_backup_20251211_1453/жк-депо
+https://fattoria.by/новостройки_backup_20251211_1453/жк-дубравинский
+https://fattoria.by/новостройки_backup_20251211_1453/жк-зеленая-гавань
+https://fattoria.by/новостройки_backup_20251211_1453/жк-комфорт-парк
+https://fattoria.by/новостройки_backup_20251211_1453/жк-левада
+https://fattoria.by/новостройки_backup_20251211_1453/жк-маяк-минска
+https://fattoria.by/новостройки_backup_20251211_1453/жк-минск-мир
+https://fattoria.by/новостройки_backup_20251211_1453/жк-новая-боровая
+https://fattoria.by/новостройки_backup_20251211_1453/жк-парк-челюскинцев
+https://fattoria.by/новостройки_backup_20251211_1453/жк-фарфоровый
+https://fattoria.by/новостройки/жк-вершина
+https://fattoria.by/новостройки/жк-депо
+https://fattoria.by/новостройки/жк-дубравинский
+https://fattoria.by/новостройки/жк-зеленая-гавань
+https://fattoria.by/новостройки/жк-комфорт-парк
+https://fattoria.by/новостройки/жк-левада
+https://fattoria.by/новостройки/жк-маяк-минска
+https://fattoria.by/новостройки/жк-минск-мир
+https://fattoria.by/новостройки/жк-новая-боровая
+https://fattoria.by/новостройки/жк-парк-челюскинцев
+https://fattoria.by/новостройки/жк-фарфоровый
+
+=== ПРОВЕРКА РАБОТОСПОСОБНОСТИ ЖК ===
+user-agreement → 200
+новостройки/жк-зеленая-гавань → 200
+новостройки/жк-минск-мир → 200
+новостройки/жк-фарфоровый → 200
+новостройки/жк-новая-боровая → 200
+новостройки/жк-вершина → 200
+новостройки/жк-комфорт-парк → 200
+новостройки/жк-парк-челюскинцев → 200
+новостройки/жк-дубравинский → 200
+новостройки/жк-левада → 200

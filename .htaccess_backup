@@ -1,0 +1,17 @@
+RewriteEngine On
+
+# 1. Редирект с .html на без .html (внешний 301)
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^.]+)\.html\ HTTP
+RewriteRule ^([^.]+)\.html$ /$1 [R=301,L]
+
+# 2. Внутренний редирект без .html на .html (чтобы страницы работали)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [L]
+
+# Остальные существующие правила...
+
+# Новогодняя акция
+RewriteRule ^new-year-promo/?$ /new-year-promo.html [L,R=301]
+RewriteRule ^novogodnyaya-aktsiya/?$ /new-year-promo.html [L,R=301]

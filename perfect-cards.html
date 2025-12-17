@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Тест карточек</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { padding: 20px; background: #f8f9fa; }
+    .category-square {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      height: 300px;
+      position: relative;
+    }
+    .category-square img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+    .category-content {
+      padding: 15px;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Агентство недвижимости Фаттория в Минске</h1>
+    <h2>Большой выбор объектов недвижимости</h2>
+    <p>Мы предлагаем лучшие варианты квартир, домов и коммерческой недвижимости в вашем городе</p>
+    
+    <div class="row mt-5">
+      <div class="col-md-3 col-sm-6">
+        <div class="category-square">
+          <img src="/images/optimized/foto19.webp" alt="Новостройки">
+          <div class="category-content">
+            <h4>Новостройки</h4>
+            <p>Современные жилые комплексы с отделкой</p>
+            <a href="/new-buildings" class="btn btn-primary btn-sm mt-2">Смотреть</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="category-square">
+          <img src="/images/optimized/фото12.webp" alt="Наши объекты">
+          <div class="category-content">
+            <h4>Наши объекты</h4>
+            <p>Лучшие предложения от нашего агентства</p>
+            <a href="/properties" class="btn btn-primary btn-sm mt-2">Смотреть</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="category-square">
+          <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=870&q=80" alt="Коммерческая недвижимость">
+          <div class="category-content">
+            <h4>Коммерческая</h4>
+            <p>Помещения для бизнеса и инвестиций</p>
+            <a href="/commercial-properties" class="btn btn-primary btn-sm mt-2">Смотреть</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="category-square">
+          <img src="/images/optimized/foto20.webp" alt="Загородная недвижимость">
+          <div class="category-content">
+            <h4>Загородная</h4>
+            <p>Дома, коттеджи и участки за городом</p>
+            <a href="/country-properties" class="btn btn-primary btn-sm mt-2">Смотреть</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    console.log("Загружено карточек:", document.querySelectorAll('.category-square').length);
+    alert("Должно быть 4 карточки. Если видите меньше - проблема в CSS/HTML.");
+  </script>
+</body>
+</html>

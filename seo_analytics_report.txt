@@ -1,0 +1,57 @@
+SEO И АНАЛИТИКА ОТЧЕТ
+======================
+Сайт: fattoria.by
+Дата проверки: $(date)
+
+1. НАЙДЕННЫЕ СИСТЕМЫ АНАЛИТИКИ:
+Яндекс.Метрика:
+    <meta name="yandex-verification" content="a3a53c29d96d7c3f" />
+  <!-- Yandex Maps API -->
+  <script src="https://api-maps.yandex.ru/2.1/?apikey=YOUR_YANDEX_MAPS_API_KEY&lang=ru_RU" ></script>
+  <!-- Yandex.Metrika counter -->
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=105466180', 'ym');
+    ym(105466180, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+<!-- /Yandex.Metrika counter -->
+<!-- Yandex Map Initialization -->
+
+Google Analytics:
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C279E20DBY"></script>
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-C279E20DBY');
+   <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17659752543"></script>
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-17659752543');
+    // Core Web Vitals tracking for Google Analytics
+    function sendToGoogleAnalytics({name, delta, value, id}) {
+      gtag('event', name, {
+        getCLS(sendToGoogleAnalytics);
+        getFID(sendToGoogleAnalytics);
+        getFCP(sendToGoogleAnalytics);
+        getLCP(sendToGoogleAnalytics);
+        getTTFB(sendToGoogleAnalytics);
+<section class="big-choice" id="main-content" role="main">
+  <div class="container big-choice-content">
+      <div class="row g-4">
+<img src="images/фото3.jpg" class="img-fluid rounded" alt="Офис агентства недвижимости" loading="lazy">
+<section class="unified-bg-section">
+<div class="floating-contact">
+                  <a href="https://wa.me/375447025267" target="_blank" rel="noopener" class="floating-btn whatsapp">
+  <a href="tel:+375296380053" class="floating-btn phone">
+.floating-contact {
+.floating-btn {
+.floating-btn.phone {
+.floating-btn:hover {
+                       class="img-fluid rounded mb-3" alt="${title}" loading="lazy">
+    gtag('consent', 'update', {
+    gtag('consent', 'update', {
+
+2. SEO ТЕГИ ГЛАВНОЙ СТРАНИЦЫ:
+  <title>Фаттория - Агентство недвижимости Минск</title>
+  <meta name="description" content="Фаттория бай - профессиональное агентство недвижимости в Минске. Продажа и аренда квартир, домов, коммерческой недвижимости. Лучшие предложения на рынке недвижимости Беларуси.">
+  <meta property="og:description" content="Фаттория бай - профессиональное агентство недвижимости в Минске. Продажа и аренда квартир, домов, коммерческой недвижимости. Лучшие предложения на рынке недвижимости Беларуси.">
+  <meta name="twitter:description" content="Фаттория бай - профессиональное агентство недвижимости в Минске. Продажа и аренда квартир, домов, коммерческой недвижимости. Лучшие предложения на рынке недвижимости Беларуси.">
+    <h1>Фаттория бай - Агентство недвижимости Минск</h1>

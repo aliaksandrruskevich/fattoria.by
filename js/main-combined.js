@@ -212,7 +212,7 @@ function submitForm(form, data) {
     submitBtn.textContent = 'Отправка...';
   }
 
-  fetch('/api/submit-form', {
+  fetch('/api/submit-form-universal-fixed-v2.php', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -407,7 +407,7 @@ setTimeout(function() {
                 console.log('📤 Данные гарантированные:', data);
                 
                 // Отправляем
-                fetch('/api/submit-form', {
+                fetch('/api/submit-form-universal-fixed-v2.php', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(data)

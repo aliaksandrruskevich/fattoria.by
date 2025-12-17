@@ -1,0 +1,7 @@
+// Показываем через 3 секунды
+setTimeout(function() {
+    document.getElementById('ultraCreditModal').style.display = 'block';
+}, 3000);
+
+// Защита от повторных обработчиков
+window.ultraModalLoaded = true;

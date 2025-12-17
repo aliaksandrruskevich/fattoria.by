@@ -1,50 +1,71 @@
-# Бэкапы и временные файлы
+# Бэкапы и архивы
 *.backup*
-*.bak*
+backup_*
+*backup*.tar.gz
+*backup*.zip
+backup_before_*
+backup_temp/
+backups/
+old_backups/
+backup_20251211_125544/
+backup_problem_files/
+*_backup_*
+
+# Временные файлы
 *.tmp
 *.temp
-*.old
-*.new
-*.original
-
-# Логи
+*.bak
+*~
 *.log
-logs/
-error.log
-access.log
-
-# Кэш и временные папки
-cache/
-tmp/
-temp/
+form-final.log
+telegram-send.log
+google-forms-final.log
+email-final.log
+debug_handler.log
 
 # Системные файлы
 .DS_Store
 .idea/
 .vscode/
 Thumbs.db
-
-# Node.js
 node_modules/
-npm-debug.log
-package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Тестовые файлы
-test*
-*test*
-
-# Конфиденциальное
-*.pem
-*.key
-.env
+# Конфиденциальные данные
+*.env
 config.php
+database.php
+credentials.json
 
-# Большие архивы
-*.zip
+# Большие файлы
 *.tar.gz
-*.rar
+*.zip
+*.sql
+*.sqlite
 
-# IDE файлы
-*.swp
-*.swo
-*~
+# Дубликаты и тестовые файлы
+*.BACKUP_*
+*.backup_*
+index.html.backup*
+index.html.broken*
+index.html.before_*
+*test*
+*debug*
+
+# Временные директории
+temp/
+tmp/
+test_environment/
+
+# Специфичные файлы сайта
+universal_form_handler_NEW.php
+universal_form_handler_OLD.php
+ultra-server.js
+phpinfo.php
+schema_check.json
+inventory_*.txt
+
+# Папки с бэкапами
+новостройки_backup_*/

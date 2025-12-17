@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎄 Новогодняя акция 2025-2026 - Продай квартиру до 14 января | Fattoria.by</title>
+    <meta name="description" content="🎄 Новогодняя акция 2025-2026! Продай квартиру до 14 января и получи  на услуги риелтора. Оформи заявку сейчас!">
+    <meta name="keywords" content="новогодняя акция, продать квартиру, , риелтор, недвижимость Минск, 2025-2026">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="🎄 Новогодняя акция 2025-2026 - Продай квартиру до 14 января | Fattoria.by">
+    <meta property="og:description" content="Получи  на услуги риелтора при продаже квартиры до 14 января!">
+    <meta property="og:image" content="https://fattoria.by/images/optimized/новогодняя-акция.webp">
+    <meta property="og:url" content="https://fattoria.by/new-year-promo">
+    <meta property="og:type" content="website">
+    
+    <!-- Стили сайта -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Новогодние стили -->
+    <style>
+        body {
+            background: linear-gradient(135deg, #0d2818 0%, #1a472a 100%);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        /* Снежинки */
+        .snowflake {
+            position: fixed;
+            color: white;
+            font-size: 1.5rem;
+            z-index: 9998;
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear infinite;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+        }
+        
+        .snowflake.small {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+        
+        .snowflake.large {
+            font-size: 2rem;
+            opacity: 0.9;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes sway {
+            0%, 100% { transform: translateX(0); }
+             { transform: translateX(30px); }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .new-year-header {
+            background: linear-gradient(rgba(26, 71, 42, 0.9), rgba(13, 40, 24, 0.9));
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 5px solid #ffd700;
+            z-index: 1;
+        }
+        
+        .new-year-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><text x="50" y="50" font-size="80" text-anchor="middle" fill="white" opacity="0.05">❄</text></svg>');
+            z-index: -1;
+        }
+        
+        .holiday-title {
+            font-size: 3.5rem;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.7),
+                         0 0 40px rgba(255, 107, 107, 0.5);
+            margin-bottom: 20px;
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ffd700, 0 0 20px #ff6b6b; }
+            to { text-shadow: 0 0 20px #ffd700, 0 0 40px #ff6b6b; }
+        }
+        
+        .deadline-badge {
+            background: linear-gradient(45deg, #ff6b6b, #ff9500);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.5);
+            animation: pulse 2s infinite;
+            border: 3px solid white;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+             { transform: scale(1.05); }
+        }
+        
+        .timer-section {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            border: 2px solid #ffd700;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .timer {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ffd700;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            margin: 20px 0;
+            letter-spacing: 2px;
+        }
+        
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            height: 100%;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            border-color: #ffd700;
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+        }
+        
+        .benefit-card h3 {
+            color: #000000 !important;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .benefit-card p {
+            color: #333333 !important;
+            line-height: 1.6;
+        }
+        
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #1a472a;
+            display: block;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #ffd700 0%, #ff9500 100%);
+            border-radius: 20px;
+            padding: 60px;
+            margin: 60px 0;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta-button {
+            background: #1a472a;
+            color: white;
+            padding: 20px 50px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: 3px solid white;
+            transition: all 0.3s;
+            margin: 10px;
+            display: inline-block;
+            text-decoration: none;
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            background: white;
+            color: #1a472a;
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .holiday-decoration {
+            position: absolute;
+            font-size: 30px;
+            animation: bounce 2s infinite;
+            z-index: 9999;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+             { transform: translateY(-20px) rotate(10deg); }
+        }
+        
+        .date-period {
+            font-size: 1.2rem;
+            color: #ffd700;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        /* Стили модального окна */
+        .new-year-modal .modal-content {
+            background: linear-gradient(135deg, #0d2818 0%, #1a472a 100%);
+            border: 5px solid #ffd700;
+            border-radius: 25px;
+            color: white;
+        }
+        
+        .new-year-modal .modal-header {
+            border-bottom: 3px solid #ffd700;
+            background: rgba(26, 71, 42, 0.9);
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .new-year-modal .modal-title {
+            color: #ffd700;
+            font-size: 2rem;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .new-year-modal .modal-body {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .new-year-modal .modal-footer {
+            border-top: 3px solid #ffd700;
+            background: rgba(26, 71, 42, 0.9);
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .modal-form .form-control {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border: 2px solid #ffd700 !important;
+            color: #000000 !important;
+            padding: 15px !important;
+            border-radius: 10px !important;
+            margin-bottom: 20px !important;
+        }
+        
+        .modal-form .form-control:focus {
+            background: white !important;
+            border-color: #ff9500 !important;
+            box-shadow: 0 0 0 0.25rem rgba(255, 215, 0, 0.25) !important;
+            color: #000000 !important;
+        }
+        
+        .modal-form .form-control::placeholder {
+        
+        /* Для option в выпадающем списке */
+        .modal-form select.form-control option {
+            color: #000000 !important;
+            background: white !important;
+        }
+            color: #666666 !important;
+        }
+        
+        .modal-form .form-label {
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .modal-form .btn-submit {
+            background: linear-gradient(45deg, #ffd700, #ff9500);
+            color: #1a472a;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            width: 100%;
+            transition: all 0.3s;
+            border: 3px solid white;
+        }
+        
+        .modal-form .btn-submit:hover {
+            background: linear-gradient(45deg, #1a472a, #0d2818);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-success {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .modal-success i {
+            font-size: 4rem;
+            color: #ffd700;
+            margin-bottom: 20px;
+        }
+        
+        .modal-success h4 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        
+        .form-check-input:checked {
+            background-color: #ffd700;
+            border-color: #ffd700;
+        }
+        
+        .form-check-label {
+            color: white;
+        }
+        
+        /* Стиль для ссылки-телефона */
+        .phone-link {
+            text-decoration: none !important;
+        }
+        
+        @media (max-width: 768px) {
+            .holiday-title { font-size: 2.5rem; }
+            .timer { font-size: 2.5rem; }
+            .deadline-badge { font-size: 1.4rem; padding: 12px 25px; }
+            .cta-section { padding: 40px 20px; }
+            .cta-button { padding: 15px 30px; font-size: 1.1rem; }
+            .new-year-modal .modal-title { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Снежинки будут добавлены через JavaScript -->
+    
+    <!-- Новогодний декор -->
+    <div class="holiday-decoration" style="top: 10%; left: 5%;">🎁</div>
+    <div class="holiday-decoration" style="top: 20%; right: 10%;">⭐</div>
+    <div class="holiday-decoration" style="bottom: 30%; left: 15%;">🔔</div>
+    <div class="holiday-decoration" style="top: 40%; right: 15%;">🎄</div>
+    
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Новогодний заголовок -->
+    <section class="new-year-header">
+        <div class="container">
+            <h1 class="holiday-title">🎄 НОВОГОДНЯЯ АКЦИЯ 2025-2026 🎄</h1>
+            <div class="deadline-badge">
+                <i class="fas fa-clock"></i> 15 ДЕКАБРЯ 2025 - 14 ЯНВАРЯ 2026
+            </div>
+            <p class="lead fs-3" style="max-width: 800px; margin: 0 auto;">
+                Обратитесь к нам и продайте свою квартиру в ближайшее время по выгодной цене
+            </p>
+        </div>
+    </section>
+
+    <!-- Таймер -->
+    <section class="timer-section">
+        <div class="container text-center">
+            <h2 class="mb-4" style="color: #ffd700;">
+                <i class="fas fa-hourglass-half"></i> ДО КОНЦА АКЦИИ ОСТАЛОСЬ:
+            </h2>
+            <div class="timer" id="countdown">30 дней 00:00:00</div>
+            <p class="fs-5 text-light">Успейте воспользоваться специальными новогодними условиями! 🎅</p>
+            <div class="date-period" id="datePeriod">
+                📅 Период акции: <strong>15.12.2025 - 14.01.2026</strong>
+            </div>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section class="container py-5">
+        <h2 class="text-center mb-5" style="color: #ffd700; font-size: 2.5rem;">
+            <i class="fas fa-star"></i> ПОЧЕМУ СЕЙЧАС ИДЕАЛЬНОЕ ВРЕМЯ?
+        </h2>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="benefit-card text-center">
+                    <span class="benefit-icon">🚀</span>
+                    <h3>СУПЕР-СКОРОСТЬ</h3>
+                    <p>В новогодний период покупатели активно ищут варианты. Мы используем усиленную рекламу в Яндекс.Директ и соцсетях для мгновенного привлечения клиентов.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="benefit-card text-center">
+                    <span class="benefit-icon">💰</span>
+                    <h3>ВЫГОДНАЯ ЦЕНА</h3>
+                    <p>Новый год - время принятия важных решений. Покупатели готовы платить справедливую цену, чтобы успеть до праздников.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="benefit-card text-center">
+                    <span class="benefit-icon">🎯</span>
+                    <h3>ПРИОРИТЕТНОЕ ВНИМАНИЕ</h3>
+                    <p>Ваш объект получает максимальное внимание наших специалистов, размещается на всех площадках и в рекламных кампаниях.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Призыв к действию -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="mb-4" style="color: #1a472a; font-size: 2.5rem;">
+                🎁 НЕ УПУСТИТЕ СВОЙ ШАНС!
+            </h2>
+            <p class="mb-5 fs-4" style="color: #1a472a;">
+                С 15 декабря 2025 по 14 января 2026 действуют специальные новогодние условия.<br>
+                Оставьте заявку и получите персональное предложение!
+            </p>
+            
+            <div class="d-flex flex-wrap justify-content-center">
+                <button type="button" class="cta-button" data-bs-toggle="modal" data-bs-target="#newYearModal">
+                    <i class="fas fa-gift"></i> ОСТАВИТЬ ЗАЯВКУ НА АКЦИЮ
+                </button>
+                <a href="tel:+375296380053" class="cta-button phone-link">
+                    <i class="fas fa-phone"></i> ПОЗВОНИТЬ: +375 (29) 638-00-53
+                </a>
+            </div>
+            
+            <p class="mt-5 fs-5" style="color: #1a472a; opacity: 0.9;">
+                <i class="fas fa-tree"></i> Встретьте Новый год с выгодной сделкой! <i class="fas fa-gift"></i>
+            </p>
+        </div>
+    </section>
+
+    <!-- Новогоднее модальное окно -->
+    <div class="modal fade new-year-modal" id="newYearModal" tabindex="-1" aria-labelledby="newYearModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="newYearModalLabel">
+                        🎄 ОСТАВЬТЕ ЗАЯВКУ НА НОВОГОДНЮЮ АКЦИЮ
+                    </h3>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center mb-4 fs-5" style="color: #ffd700;">
+                        Заполните форму и наш менеджер свяжется с вами в течение 15 минут
+                    </p>
+                    
+                    <form id="newYearForm" class="modal-form needs-validation" novalidate>
+                        <input type="hidden" name="form_type" value="new_year_promo">
+                        <input type="hidden" name="source" value="Новогодняя акция 2025-2026 (модальное окно)">
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="modalName" class="form-label">Ваше имя *</label>
+                                <input type="text" class="form-control" id="modalName" name="name" 
+                                       placeholder="Иван Иванов" required>
+                                <div class="invalid-feedback">
+                                    Пожалуйста, введите ваше имя.
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="modalPhone" class="form-label">Телефон *</label>
+                                <input type="tel" class="form-control" id="modalPhone" name="phone" 
+                                       placeholder="+375 (29) 638-00-53" required>
+                                <div class="invalid-feedback">
+                                    Пожалуйста, введите ваш телефон.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="modalPropertyType" class="form-label">Тип недвижимости</label>
+                            <select class="form-control" id="modalPropertyType" name="property_type">
+                                <option value="">Выберите тип</option>
+                                <option value="квартира">Квартира</option>
+                                <option value="дом">Частный дом</option>
+                                <option value="участок">Земельный участок</option>
+                                <option value="коммерческая">Коммерческая недвижимость</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="modalArea" class="form-label">Район / Адрес</label>
+                            <input type="text" class="form-control" id="modalArea" name="area" 
+                                   placeholder="Пример: Центральный район, ул. Ленина, д. 10">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="modalMessage" class="form-label">Дополнительная информация</label>
+                            <textarea class="form-control" id="modalMessage" name="message" 
+                                      rows="3" placeholder="Хочу продать 2-комнатную квартиру до Нового года..."></textarea>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="modalAgree" name="agree" required>
+                            <label class="form-check-label" for="modalAgree">
+                                Я согласен на обработку персональных данных
+                            </label>
+                            <div class="invalid-feedback">
+                                Необходимо согласие на обработку данных.
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-gift"></i> ПОЛУЧИТЬ НОВОГОДНЕЕ ПРЕДЛОЖЕНИЕ
+                        </button>
+                    </form>
+                    
+                    <div id="modalSuccess" class="modal-success" style="display: none;">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>Спасибо за заявку! 🎄</h4>
+                        <p class="fs-5">Ваша заявка на новогоднюю акцию принята.</p>
+                        <p>Наш менеджер свяжется с вами в течение 15 минут для обсуждения деталей.</p>
+                        <div class="mt-4">
+                            <p>Или позвоните нам прямо сейчас:</p>
+                            <a href="tel:+375296380053" class="btn btn-success btn-lg mt-2">
+                                <i class="fas fa-phone"></i> +375 (29) 638-00-53
+                            </a>
+                        </div>
+                        <button type="button" class="btn btn-warning mt-3" data-bs-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p class="text-center w-100 mb-0" style="color: #ffd700;">
+                        <i class="fas fa-tree"></i> Новый год - время для выгодных решений! <i class="fas fa-gift"></i>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Скрипты -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Загружаем header и footer
+        $(function() {
+            $("#header-placeholder").load("/includes/header.html");
+            $("#footer-placeholder").load("/includes/footer.html");
+        });
+        
+        // ========== МНОГО СНЕЖИНОК ==========
+        function createSnowflakes() {
+            const snowTypes = ['❄', '❅', '❆', '＊', '✱', '✦', '✶', '❋'];
+            const snowContainer = document.createElement('div');
+            snowContainer.id = 'snowflakes-container';
+            snowContainer.style.position = 'fixed';
+            snowContainer.style.top = '0';
+            snowContainer.style.left = '0';
+            snowContainer.style.width = '100%';
+            snowContainer.style.height = '100%';
+            snowContainer.style.pointerEvents = 'none';
+            snowContainer.style.zIndex = '9998';
+            document.body.prepend(snowContainer);
+            
+            // Создаем 300 снежинок разных типов
+            for (let i = 0; i < 300; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                
+                // Разные типы снежинок
+                const type = snowTypes[Math.floor(Math.random() * snowTypes.length)];
+                snowflake.textContent = type;
+                
+                // Разные размеры
+                const sizeClass = Math.random() > 0.7 ? 'large' : (Math.random() > 0.5 ? '' : 'small');
+                if (sizeClass) snowflake.classList.add(sizeClass);
+                
+                // Позиционирование
+                snowflake.style.left = Math.random() * 100 + 'vw';
+                snowflake.style.top = '-50px';
+                
+                // Анимация
+                const duration = Math.random() * 8 + 5; // 5-13 секунд
+                const delay = Math.random() * 10; // до 10 секунд задержки
+                snowflake.style.animation = `fall ${duration}s linear infinite`;
+                snowflake.style.animationDelay = delay + 's';
+                
+                // Дополнительные анимации для некоторых снежинок
+                if (i % 4 === 0) {
+                    snowflake.style.animation += `, sway ${Math.random() * 3 + 2}s ease-in-out infinite`;
+                }
+                if (i % 3 === 0) {
+                    snowflake.style.animation += `, spin ${Math.random() * 10 + 5}s linear infinite`;
+                }
+                
+                // Прозрачность
+                snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+                
+                snowContainer.appendChild(snowflake);
+            }
+            
+            console.log('❄️ Создано 300 снежинок!');
+        }
+        
+        // ========== РАБОЧИЙ ТАЙМЕР ==========
+        function updateCountdown() {
+            // Дата окончания акции: 14 января 2026, 23:59:59
+            const endDate = new Date('2026-01-14T23:59:59').getTime();
+            const now = new Date().getTime();
+            const timeLeft = endDate - now;
+            
+            const timerElement = document.getElementById('countdown');
+            
+            if (timeLeft > 0) {
+                // Вычисляем дни, часы, минуты, секунды
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                // Форматируем вывод
+                timerElement.textContent = 
+                    `${days} дней ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Цвет в зависимости от оставшегося времени
+                if (days < 7) {
+                    timerElement.style.color = '#ff6b6b'; // Красный при < 7 дней
+                } else if (days < 14) {
+                    timerElement.style.color = '#ff9500'; // Оранжевый при < 14 дней
+                } else {
+                    timerElement.style.color = '#ffd700'; // Желтый при > 14 дней
+                }
+            } else {
+                // Акция завершена
+                timerElement.textContent = "Акция завершена";
+                timerElement.style.color = '#ff6b6b';
+            }
+        }
+        
+        // ========== ОБРАБОТКА ФОРМЫ В МОДАЛЬНОМ ОКНЕ ==========
+        function handleModalFormSubmit(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const form = document.getElementById('newYearForm');
+            
+            // Проверка валидации Bootstrap
+            if (!form.checkValidity()) {
+                form.classList.add('was-validated');
+                return;
+            }
+            
+            // Собираем данные формы
+            const formData = {
+                name: document.getElementById('modalName').value,
+                phone: document.getElementById('modalPhone').value,
+                property_type: document.getElementById('modalPropertyType').value,
+                area: document.getElementById('modalArea').value,
+                message: document.getElementById('modalMessage').value,
+                form_type: 'new_year_promo',
+                source: 'Новогодняя акция 2025-2026 (модальное окно)'
+            };
+            
+            // Показываем состояние отправки
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ОТПРАВЛЯЕМ...';
+            submitBtn.disabled = true;
+            
+            // Отправляем данные через AJAX
+            $.ajax({
+                url: '/universal_form_handler.php',
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    // Скрываем форму, показываем сообщение об успехе
+                    form.style.display = 'none';
+                    document.getElementById('modalSuccess').style.display = 'block';
+                    
+                    // Отслеживание цели в Google Analytics (если есть)
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'new_year_modal_form_submit', {
+                            'event_category': 'Form',
+                            'event_label': 'Новогодняя акция 2025 (модальное окно)'
+                        });
+                    }
+                    
+                    console.log('✅ Форма успешно отправлена:', response);
+                    
+                    // Автоматически закрываем модальное окно через 5 секунд
+                    setTimeout(function() {
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('newYearModal'));
+                        modal.hide();
+                    }, 5000);
+                },
+                error: function(xhr, status, error) {
+                    console.error('❌ Ошибка отправки формы:', error);
+                    
+                    // Возвращаем кнопку в исходное состояние
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    
+                    // Показываем сообщение об ошибке
+                    alert('Произошла ошибка при отправке формы. Пожалуйста, позвоните нам по телефону: +375 (29) 638-00-53');
+                }
+            });
+        }
+        
+        // ========== СБРОС ФОРМЫ ПРИ ЗАКРЫТИИ МОДАЛЬКИ ==========
+        function resetModalForm() {
+            const form = document.getElementById('newYearForm');
+            form.reset();
+            form.classList.remove('was-validated');
+            form.style.display = 'block';
+            document.getElementById('modalSuccess').style.display = 'none';
+            
+            // Сбрасываем состояние кнопки
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-gift"></i> ПОЛУЧИТЬ НОВОГОДНЕЕ ПРЕДЛОЖЕНИЕ';
+            submitBtn.disabled = false;
+        }
+        
+        // ========== ФУНКЦИЯ ДЛЯ ПРОВЕРКИ ТЕЛЕФОНА ==========
+        function checkPhoneNumber() {
+            // Проверяем, работает ли ссылка tel:
+            const testLink = document.createElement('a');
+            testLink.href = 'tel:+375296380053';
+            console.log('🔍 Проверка телефона:', {
+                'href': testLink.href,
+                'protocol': testLink.protocol,
+                'on mobile': 'Должно открыть приложение звонков',
+                'on desktop': 'Может открыть Skype или другое приложение'
+            });
+            
+            // Добавляем обработчик для телефонов
+            document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    console.log('📞 Нажата телефонная ссылка:', this.href);
+                    
+                    // Для десктопа показываем номер
+                    if (window.innerWidth > 768) {
+                        if (!confirm('Позвонить по номеру ' + this.textContent + '?')) {
+                            e.preventDefault();
+                        }
+                    }
+                });
+            });
+        }
+        
+        // ========== ИНИЦИАЛИЗАЦИЯ ==========
+        $(document).ready(function() {
+            console.log('🎄 Новогодняя страница загружается...');
+            
+            // Создаем снежинки
+            createSnowflakes();
+            
+            // Запускаем таймер
+            updateCountdown(); // Сразу обновляем
+            setInterval(updateCountdown, 1000); // Обновляем каждую секунду
+            
+            // Назначаем обработчик формы в модальном окне
+            document.getElementById('newYearForm').addEventListener('submit', handleModalFormSubmit);
+            
+            // Сбрасываем форму при закрытии модального окна
+            const newYearModal = document.getElementById('newYearModal');
+            newYearModal.addEventListener('hidden.bs.modal', resetModalForm);
+            
+            // Автооткрытие модального окна через 10 секунд
+            setTimeout(function() {
+                const modal = new bootstrap.Modal(newYearModal);
+                modal.show();
+            }, 10000);
+            
+            // Проверяем телефонные ссылки
+            checkPhoneNumber();
+            
+            console.log('✅ Страница готова! Таймер запущен, модальное окно подключено!');
+            console.log('📞 Телефон для связи: +375 (29) 638-00-53');
+            
+            // Проверяем даты в консоли для отладки
+            const endDate = new Date('2026-01-14T23:59:59');
+            console.log('📅 Дата окончания акции:', endDate.toLocaleDateString('ru-RU'));
+            console.log('⏰ Текущая дата:', new Date().toLocaleDateString('ru-RU'));
+        });
+        
+        // Резервный вариант загрузки header/footer если jQuery не сработал
+        setTimeout(function() {
+            if (!document.querySelector('header') || document.querySelector('header').innerHTML.trim() === '') {
+                console.log('⚠️ jQuery не загрузил header, используем fetch...');
+                
+                fetch('/includes/header.html')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('header-placeholder').innerHTML = html;
+                    })
+                    .catch(err => console.error('Ошибка загрузки header:', err));
+                
+                fetch('/includes/footer.html')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('footer-placeholder').innerHTML = html;
+                    })
+                    .catch(err => console.error('Ошибка загрузки footer:', err));
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

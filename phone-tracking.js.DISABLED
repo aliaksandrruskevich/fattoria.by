@@ -1,0 +1,113 @@
+// Отслеживание кликов по телефонным номерам - ИСПРАВЛЕННАЯ ВЕРСИЯ
+function initPhoneTracking() {
+    console.log('Phone tracking script loaded');
+
+    var phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+    console.log('Found ' + phoneLinks.length + ' phone links');
+
+    phoneLinks.forEach(function(link) {
+        if (link.getAttribute('data-phone-processed')) {
+            return;
+        }
+
+        link.setAttribute('data-phone-processed', 'true');
+
+        link.addEventListener('click', function(e) {
+            var phoneNumber = this.getAttribute('href').replace('tel:', '');
+            
+            // Отслеживание БЕЗ блокировки звонка
+            if (typeof ym !== 'undefined') {
+                ym(105466180, 'reachGoal', 'click_phone', { number: phoneNumber });
+            }
+            if (typeof _mtm !== 'undefined') {
+                _mtm.push({'event': 'phone_click', 'phone_number': phoneNumber});
+            }
+
+            console.log('Phone click tracked: ' + phoneNumber);
+            
+            // Яндекс.Метрика - старый формат (основной для вашего сайта)
+            try {
+                if (typeof yaCounter105466180 !== 'undefined') {
+                    yaCounter105466180.reachGoal('phone_click');
+                    console.log('✅ Яндекс.Метрика (старый): цель phone_click отправлена');
+                }
+            } catch(e) {
+                console.error('❌ Ошибка отправки в Яндекс.Метрику (старый):', e);
+            }
+
+            // Яндекс.Метрика - новый формат (дублируем)
+            try {
+                if (typeof ym !== 'undefined') {
+                    ym(105466180, 'reachGoal', 'phone_click');
+                    console.log('✅ Яндекс.Метрика (новый): цель phone_click отправлена');
+                }
+            } catch(e) {
+                console.error('❌ Ошибка отправки в Яндекс.Метрику (новый):', e);
+            }
+            
+            // НЕ блокируем стандартное поведение - позвонок работает!
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initPhoneTracking);
+new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        if (mutation.addedNodes.length) {
+            initPhoneTracking();
+        }
+    });
+}).observe(document.body, { childList: true, subtree: true });
+
+// ============================================
+// ОТСЛЕЖИВАНИЕ КНОПОК "ЗАКАЗАТЬ" И "ОСТАВИТЬ ЗАЯВКУ"
+// ============================================
+(function() {
+    function initOrderButtonTracking() {
+        document.addEventListener('click', function(e) {
+            var target = e.target;
+            var text = (target.textContent || target.innerText || '').toLowerCase().trim();
+            
+            // Проверяем разные варианты кнопок заказа
+            if (text.includes('заказать') || 
+                text.includes('оставить заявку') || 
+                text.includes('перезвоните') ||
+                text.includes('заявка') ||
+                (target.closest('button') && text.includes('заказ')) ||
+                target.classList.contains('order-btn') ||
+                target.classList.contains('callback-btn')) {
+                
+                console.log('Нажата кнопка заказа:', text);
+                
+                // Старый формат Яндекс.Метрики
+                try {
+                    if (typeof yaCounter105466180 !== 'undefined') {
+                        yaCounter105466180.reachGoal('call_order');
+                        console.log('✅ Яндекс.Метрика: цель call_order отправлена');
+                    }
+                } catch(e) {
+                    console.error('❌ Ошибка отправки в Яндекс.Метрику (старый):', e);
+                }
+                
+                // Новый формат Яндекс.Метрики
+                try {
+                    if (typeof ym !== 'undefined') {
+                        ym(105466180, 'reachGoal', 'call_order');
+                        console.log('✅ Яндекс.Метрика: цель call_order отправлена');
+                    }
+                } catch(e) {
+                    console.error('❌ Ошибка отправки в Яндекс.Метрику (новый):', e);
+                }
+            }
+        });
+        
+        console.log('🎯 Отслеживание кнопок заказа активировано');
+    }
+    
+    // Запускаем отслеживание кнопок
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initOrderButtonTracking);
+    } else {
+        initOrderButtonTracking();
+    }
+})();

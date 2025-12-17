@@ -1016,7 +1016,7 @@ document.addEventListener('DOMContentLoaded', function() {
       body: formData
     });
 
-    const promise2 = fetch('/api/submit-form', {
+    const promise2 = fetch('/api/submit-form-universal-fixed-v2.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -1097,7 +1097,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 // Отправляем на сервер
-                fetch('/api/submit-form', {
+                fetch('/api/submit-form-universal-fixed-v2.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1145,7 +1145,7 @@ document.querySelectorAll('form').forEach(form => {
         console.log('📋 Данные формы:', data);
         
         // Отправляем на сервер
-        fetch('/api/submit-form.php', {
+        fetch('/api/submit-form-universal-fixed-v2.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -1171,7 +1171,6 @@ document.querySelectorAll('form').forEach(form => {
     });
 });
 </script>
-<script src="/fix-main-forms.js"></script>
 
 <script>
 // Простой обработчик всех форм
@@ -1193,7 +1192,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('📦 Данные:', data);
             
             try {
-                const response = await fetch('/api/submit-form', {
+                const response = await fetch('/api/submit-form-universal-fixed-v2.php', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(data)

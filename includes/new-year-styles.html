@@ -1,0 +1,122 @@
+<!-- Новогодние стили для всех страниц -->
+<style>
+    /* Новогодний баннер-кружок */
+    .new-year-banner {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        z-index: 9999;
+        animation: bannerBounce 2s infinite;
+    }
+    
+    .new-year-banner a {
+        display: block;
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(45deg, #ff6b6b, #ff9500, #ffd700);
+        border-radius: 50%;
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+        text-align: center;
+        line-height: 100px;
+        box-shadow: 0 10px 30px rgba(255, 107, 107, 0.5);
+        border: 3px solid white;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s;
+    }
+    
+    .new-year-banner a:hover {
+        transform: scale(1.1) rotate(10deg);
+        box-shadow: 0 15px 40px rgba(255, 107, 107, 0.7);
+    }
+    
+    .new-year-banner a::before {
+        content: "🎄";
+        position: absolute;
+        top: -10px;
+        left: 5px;
+        font-size: 20px;
+        animation: sparkle 1.5s infinite;
+    }
+    
+    .new-year-banner a::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle, transparent 30%, rgba(255, 255, 255, 0.3) 70%);
+        border-radius: 50%;
+    }
+    
+    /* Снежинки */
+    .snowflake {
+        position: fixed;
+        color: white;
+        font-size: 1.5rem;
+        z-index: 9998;
+        user-select: none;
+        pointer-events: none;
+        animation: fall linear infinite;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+    }
+    
+    .snowflake.small {
+        font-size: 1rem;
+        opacity: 0.7;
+    }
+    
+    .snowflake.large {
+        font-size: 2rem;
+        opacity: 0.9;
+    }
+    
+    @keyframes fall {
+        0% {
+            transform: translateY(-100px) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(100vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes sway {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(30px); }
+    }
+    
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    @keyframes bannerBounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes sparkle {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.7; transform: scale(0.9); }
+    }
+    
+    @media (max-width: 768px) {
+        .new-year-banner {
+            top: 80px;
+            right: 10px;
+        }
+        
+        .new-year-banner a {
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            font-size: 14px;
+        }
+    }
+</style>

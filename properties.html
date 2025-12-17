@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Наши объекты - Fattoria.by</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+        .maintenance-container {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            margin: 20px;
+        }
+        .icon {
+            font-size: 4em;
+            margin-bottom: 30px;
+            color: #667eea;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #ecf0f1;
+            border-radius: 3px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+        .progress {
+            width: 75%;
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 3px;
+            animation: progress 2s ease-in-out infinite;
+        }
+        @keyframes progress {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(0); }
+        }
+        .contact-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        .contact-info a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+    <link rel="stylesheet" href="/css/snowflakes.css">
+</head>
+<body>
+    <div class="maintenance-container">
+        <div class="icon">🏗️</div>
+        <h1>Наши объекты</h1>
+        <p>Раздел находится в активной разработке. Мы готовим для вас самую актуальную информацию о наших объектах недвижимости.</p>
+        
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+        
+        <p><strong>Скоро здесь появятся:</strong><br>
+        • Подробные описания объектов<br>
+        • Фотографии и планировки<br>
+        • Актуальные цены и условия<br>
+        • Контакты менеджеров</p>
+        
+        <a href="/" class="btn">Вернуться на главную</a>
+        
+        <div class="contact-info">
+            <p>По вопросам недвижимости обращайтесь:<br>
+            <strong>Телефон:</strong> <a href="tel:+375296380053">+375 (29) 638-00-53</a><br>
+            <strong>Email:</strong> <a href="mailto:anfattoriya@gmail.com">anfattoriya@gmail.com</a></p>
+        </div>
+    </div>
+    <script src="/js/snowflakes.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!-- ДОБАВЬТЕ ЭТОТ КОД В КОНЕЦ new-buildings.html -->
+<script>
+// НЕМЕДЛЕННЫЙ ФИКС ДЛЯ ФОРМ НОВОСТРОЕК
+(function() {
+    setTimeout(() => {
+        const form = document.getElementById('modalContactForm');
+        if (form) {
+            form.onsubmit = null; // Удаляем старые обработчики
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const data = {
+                    name: this.querySelector('[name="name"]')?.value || '',
+                    phone: this.querySelector('[name="contact"]')?.value || '',
+                    email: this.querySelector('[name="email"]')?.value || '',
+                    message: this.querySelector('[name="message"]')?.value || '',
+                    project: this.querySelector('[name="project"]')?.value || 'Новостройки',
+                    form_type: 'newbuilding',
+                    source: 'new-buildings-page'
+                };
+                
+                fetch('/api/submit-newbuilding.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                })
+                .then(r => r.json())
+                .then(result => {
+                    alert(result.message);
+                    if (result.success) this.reset();
+                })
+                .catch(err => alert('Ошибка: ' + err));
+            });
+            console.log('✅ ФИКС: Обработчик формы новостроек установлен');
+        }
+    }, 2000);
+})();
+</script>

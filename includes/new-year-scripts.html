@@ -1,0 +1,94 @@
+<script>
+// ========== МНОГО СНЕЖИНОК НА ВСЕХ СТРАНИЦАХ ==========
+function createSnowflakes() {
+    // Проверяем, не созданы ли уже снежинки
+    if (document.getElementById('snowflakes-container') && 
+        document.getElementById('snowflakes-container').children.length > 0) {
+        return; // Уже созданы
+    }
+    
+    const snowTypes = ['❄', '❅', '❆', '＊', '✱', '✦', '✶', '❋'];
+    
+    // Создаем контейнер если его нет
+    let snowContainer = document.getElementById('snowflakes-container');
+    if (!snowContainer) {
+        snowContainer = document.createElement('div');
+        snowContainer.id = 'snowflakes-container';
+        snowContainer.style.position = 'fixed';
+        snowContainer.style.top = '0';
+        snowContainer.style.left = '0';
+        snowContainer.style.width = '100%';
+        snowContainer.style.height = '100%';
+        snowContainer.style.pointerEvents = 'none';
+        snowContainer.style.zIndex = '9998';
+        document.body.prepend(snowContainer);
+    }
+    
+    // Создаем 150 снежинок
+    for (let i = 0; i < 150; i++) {
+        const snowflake = document.createElement('div');
+        snowflake.className = 'snowflake';
+        
+        // Разные типы снежинок
+        const type = snowTypes[Math.floor(Math.random() * snowTypes.length)];
+        snowflake.textContent = type;
+        
+        // Разные размеры
+        const sizeClass = Math.random() > 0.8 ? 'large' : (Math.random() > 0.5 ? '' : 'small');
+        if (sizeClass) snowflake.classList.add(sizeClass);
+        
+        // Позиционирование
+        snowflake.style.left = Math.random() * 100 + 'vw';
+        snowflake.style.top = '-50px';
+        
+        // Анимация
+        const duration = Math.random() * 10 + 5; // 5-15 секунд
+        const delay = Math.random() * 15; // до 15 секунд задержки
+        snowflake.style.animation = `fall ${duration}s linear infinite`;
+        snowflake.style.animationDelay = delay + 's';
+        
+        // Дополнительные анимации
+        if (i % 4 === 0) {
+            snowflake.style.animation += `, sway ${Math.random() * 3 + 2}s ease-in-out infinite`;
+        }
+        if (i % 3 === 0) {
+            snowflake.style.animation += `, spin ${Math.random() * 10 + 5}s linear infinite`;
+        }
+        
+        // Прозрачность
+        snowflake.style.opacity = Math.random() * 0.5 + 0.3;
+        
+        snowContainer.appendChild(snowflake);
+    }
+    
+    console.log('❄️ Снежинки запущены на странице!');
+}
+
+// ========== АВТОМАТИЧЕСКОЕ СОЗДАНИЕ СНЕЖИНОК ==========
+document.addEventListener('DOMContentLoaded', function() {
+    // Ждем немного перед созданием снежинок
+    setTimeout(createSnowflakes, 500);
+    
+    // Обновляем снежинки при изменении размера окна
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+            const container = document.getElementById('snowflakes-container');
+            if (container) {
+                container.innerHTML = '';
+                createSnowflakes();
+            }
+        }, 250);
+    });
+    
+    // Новогодний лог в консоль
+    console.log('🎄 С Новым 2025 годом от Фаттории! 🎄');
+    console.log('✨ Акция действует до 14 января 2026 года');
+});
+
+// Создаем снежинки даже если DOMContentLoaded уже произошёл
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(createSnowflakes, 1000);
+}
+</script>

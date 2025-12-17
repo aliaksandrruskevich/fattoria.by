@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Таймер тест</title>
+    <style>
+        #timer { font-size: 48px; color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Тест таймера</h1>
+    <div id="timer">00:00:00</div>
+    
+    <script>
+        function update() {
+            const end = new Date('2025-01-14T23:59:59').getTime();
+            const now = new Date().getTime();
+            const diff = end - now;
+            
+            if (diff < 0) {
+                document.getElementById('timer').textContent = "Время вышло";
+                return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('timer').textContent = 
+                days + "д " + hours + "ч " + minutes + "м " + seconds + "с";
+        }
+        
+        update();
+        setInterval(update, 1000);
+    </script>
+</body>
+</html>

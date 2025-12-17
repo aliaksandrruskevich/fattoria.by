@@ -1,0 +1,51 @@
+Options -Indexes +FollowSymLinks
+DirectoryIndex index.html index.php
+AddDefaultCharset UTF-8
+
+# Защита файлов
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|sql|bak|backup)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+ErrorDocument 404 /404.html
+ErrorDocument 503 /503.html
+
+RewriteEngine On
+
+# ПРАВИЛЬНЫЕ редиректы - без абсолютных путей
+RewriteRule ^properties/?$ /properties.html [L,R=301]
+RewriteRule ^new-buildings/?$ /new-buildings.html [L,R=301]
+RewriteRule ^country-properties/?$ /country-properties.html [L,R=301]
+RewriteRule ^commercial-properties/?$ /commercial-properties.html [L,R=301]
+RewriteRule ^blog-stub/?$ /blog-stub.html [L,R=301]
+RewriteRule ^information/?$ /information.html [L,R=301]
+RewriteRule ^about/?$ /about.html [L,R=301]
+RewriteRule ^staff/?$ /staff.html [L,R=301]
+RewriteRule ^tariff-grid/?$ /tariff-grid.html [L,R=301]
+RewriteRule ^mortgage-calculator/?$ /mortgage-calculator.html [L,R=301]
+RewriteRule ^services-sellers/?$ /services-sellers.html [L,R=301]
+RewriteRule ^services-buyers/?$ /services-buyers.html [L,R=301]
+
+# Новостройки - с правильными путями
+RewriteRule ^новостройки/жк-вершина/?$ /новостройки/жк-вершина.html [L,R=301]
+RewriteRule ^новостройки/жк-депо/?$ /новостройки/жк-депо.html [L,R=301]
+RewriteRule ^новостройки/жк-дубравинский/?$ /новостройки/жк-дубравинский.html [L,R=301]
+RewriteRule ^новостройки/жк-зеленая-гавань/?$ /новостройки/жк-зеленая-гавань.html [L,R=301]
+RewriteRule ^новостройки/жк-комфорт-парк/?$ /новостройки/жк-комфорт-парк.html [L,R=301]
+RewriteRule ^новостройки/жк-левада/?$ /новостройки/жк-левада.html [L,R=301]
+RewriteRule ^новостройки/жк-маяк-минска/?$ /новостройки/жк-маяк-минска.html [L,R=301]
+RewriteRule ^новостройки/жк-минск-мир/?$ /новостройки/жк-минск-мир.html [L,R=301]
+RewriteRule ^новостройки/жк-новая-боровая/?$ /новостройки/жк-новая-боровая.html [L,R=301]
+RewriteRule ^новостройки/жк-парк-челюскинцев/?$ /новостройки/жк-парк-челюскинцев.html [L,R=301]
+RewriteRule ^новостройки/жк-фарфоровый/?$ /новостройки/жк-фарфоровый.html [L,R=301]
+
+# Новогодняя промо-страница
+RewriteRule ^new-year-promo/?$ /new-year-promo.html [L,R=301]
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “alt-php81” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-alt-php81___lsphp .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

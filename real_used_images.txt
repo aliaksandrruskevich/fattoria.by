@@ -1,0 +1,33 @@
+/images/foto19.jpg
+/images/foto20.jpg
+../images/ве1.png
+/images/верш1.jpg
+images/верш1.jpg
+images/дана1.jpg
+../images/депо3.jpg
+../images/ду1.png
+../images/ду2.png
+../images/зб2.jpg
+../images/кп2.jpg
+../images/лев1.jpg
+../images/лев2.jpg
+../images/м1.png
+../images/м2.png
+../images/мм1.png
+../images/мм2.png
+../images/нб3.jpg
+images/новаяб1.jpg
+../images/пч1.png
+../images/пч2.png
+../images/ф2.jpg
+images/фара1.jpg
+/images/фото12.jpg
+images/фото3.jpg
+images/фото8.jpg
+images/фотож.jpg
+images/фоток.jpg
+./index.html:  <link rel="icon" type="image/png" href="/images/логотип.png">
+./index.html:  <meta name="twitter:image" content="/images/логотип.png">
+./index.html:  <meta property="og:image" content="/images/логотип.png">
+./properties.html:        const mainPhoto = photos.length > 0 ? photos[0] : '/images/placeholder-property.jpg';
+./properties.html:                             onerror="this.src='/images/placeholder-property.jpg'">
