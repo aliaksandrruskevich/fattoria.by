@@ -1,71 +1,25 @@
-# Бэкапы и архивы
+# Резервные копии
+backup_*/
 *.backup*
-backup_*
-*backup*.tar.gz
-*backup*.zip
-backup_before_*
-backup_temp/
-backups/
-old_backups/
-backup_20251211_125544/
-backup_problem_files/
-*_backup_*
-
-# Временные файлы
-*.tmp
-*.temp
-*.bak
-*~
-*.log
-form-final.log
-telegram-send.log
-google-forms-final.log
-email-final.log
-debug_handler.log
-
-# Системные файлы
-.DS_Store
-.idea/
-.vscode/
-Thumbs.db
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Конфиденциальные данные
-*.env
-config.php
-database.php
-credentials.json
-
-# Большие файлы
 *.tar.gz
-*.zip
-*.sql
-*.sqlite
 
-# Дубликаты и тестовые файлы
-*.BACKUP_*
-*.backup_*
-index.html.backup*
-index.html.broken*
-index.html.before_*
-*test*
-*debug*
+# Временные и системные файлы
+node_modules/
+*.log
+error_log
 
-# Временные директории
-temp/
-tmp/
-test_environment/
+# Тестовые файлы
+test*
+quick_test*
 
-# Специфичные файлы сайта
-universal_form_handler_NEW.php
-universal_form_handler_OLD.php
-ultra-server.js
-phpinfo.php
-schema_check.json
+# Служебные скрипты и данные
+property-*.json
 inventory_*.txt
+*.sed
+*.py
+*.sh
+*.disabled
 
-# Папки с бэкапами
-новостройки_backup_*/
+# Конфиденциальное
+.env*
+[yandex_client_id]

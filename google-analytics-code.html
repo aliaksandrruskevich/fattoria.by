@@ -1,0 +1,82 @@
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C279E20DBY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C279E20DBY');
+  
+  // Enhanced Measurement - включаем автоматическое отслеживание
+  gtag('config', 'G-C279E20DBY', {
+    'send_page_view': true,
+    'page_title': document.title,
+    'page_location': window.location.href
+  });
+</script>
+
+<!-- Google Analytics события для форм -->
+<script>
+// Универсальная функция отправки событий
+window.sendGAEvent = function(eventName, params) {
+    if (typeof gtag !== 'undefined') {
+        gtag('event', eventName, params);
+        console.log('📊 Google Analytics: событие "' + eventName + '" отправлено');
+        return true;
+    }
+    return false;
+};
+
+// Отслеживание отправки форм
+window.trackGAFormSubmission = function(formType, formName, phone, source, value) {
+    const eventParams = {
+        'event_category': 'form',
+        'event_label': formType,
+        'value': value || 1,
+        'form_name': formName || 'Не указано',
+        'form_type': formType,
+        'phone': phone || 'Не указано',
+        'source': source || window.location.pathname,
+        'page_url': window.location.href,
+        'timestamp': new Date().toISOString()
+    };
+    
+    // Основное событие
+    sendGAEvent('form_submit', eventParams);
+    
+    // Дополнительные события для разных типов форм
+    if (formType.includes('consult')) sendGAEvent('consultation_request', eventParams);
+    if (formType.includes('callback')) sendGAEvent('callback_request', eventParams);
+    if (formType.includes('newbuild')) sendGAEvent('newbuilding_request', eventParams);
+    if (formType.includes('project')) sendGAEvent('project_request', eventParams);
+    
+    // Для Google Ads конверсий
+    if (typeof gtag_report_conversion === 'function') {
+        gtag_report_conversion();
+    }
+    
+    return eventParams;
+};
+
+// Отслеживание всех форм на странице
+document.addEventListener('DOMContentLoaded', function() {
+    // Находим все формы
+    const forms = document.querySelectorAll('form');
+    
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            const formData = new FormData(form);
+            const formType = form.dataset.formType || 
+                            form.getAttribute('id') || 
+                            form.getAttribute('class') || 
+                            'general_form';
+            
+            const name = formData.get('name') || '';
+            const phone = formData.get('phone') || '';
+            
+            // Отправляем событие в GA
+            trackGAFormSubmission(formType, name, phone, 'direct_form');
+        });
+    });
+});
+</script>
