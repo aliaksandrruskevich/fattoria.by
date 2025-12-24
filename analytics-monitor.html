@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мониторинг аналитики форм - Fattoria.by</title>
+    
+    <!-- ========== Яндекс.Метрика ========== -->
+    <script type="text/javascript" >
+       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+       m[i].l=1*new Date();
+       for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+       k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+       ym(105466180, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+       });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/105466180" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    
+    <!-- ========== Google Analytics ========== -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C279E20DBY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-C279E20DBY');
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #4a5568;
+            font-size: 1.1em;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card h3 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4CAF50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card h3 i {
+            color: #4CAF50;
+        }
+        
+        .status {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .status.online {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+        
+        .status.offline {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+        
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffeaa7;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 0;
+            width: 100%;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .log {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+        
+        .log-entry {
+            margin: 8px 0;
+            padding: 8px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .timestamp {
+            color: #888;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #495057;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .links a {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+        
+        .links a:hover {
+            background: #45a049;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Мониторинг аналитики форм</h1>
+            <p>Проверка работы Яндекс.Метрики и Google Analytics для форм сайта</p>
+        </div>
+        
+        <div class="dashboard">
+            <div class="card">
+                <h3><i>🎯</i> Яндекс.Метрика</h3>
+                <div class="status" id="yandexStatus">Проверка...</div>
+                <p><strong>ID:</strong> <code id="yandexId">105466180</code></p>
+                <p><strong>Цель:</strong> <code>FORM_SUBMIT</code></p>
+                <button onclick="testYandexGoal()">Тест цели</button>
+                <div id="yandexResult"></div>
+            </div>
+            
+            <div class="card">
+                <h3><i>📈</i> Google Analytics</h3>
+                <div class="status" id="gaStatus">Проверка...</div>
+                <p><strong>ID:</strong> <code id="gaId">G-C279E20DBY</code></p>
+                <p><strong>Событие:</strong> <code>form_submit</code></p>
+                <button onclick="testGAEvent()">Тест события</button>
+                <div id="gaResult"></div>
+            </div>
+            
+            <div class="card">
+                <h3><i>🧪</i> Тест формы</h3>
+                <div class="form-group">
+                    <label for="testName">Имя:</label>
+                    <input type="text" id="testName" value="Тест Мониторинг">
+                </div>
+                <div class="form-group">
+                    <label for="testPhone">Телефон:</label>
+                    <input type="text" id="testPhone" value="+375291112277">
+                </div>
+                <div class="form-group">
+                    <label for="testFormType">Тип формы:</label>
+                    <select id="testFormType">
+                        <option value="consultation">Консультация</option>
+                        <option value="callback">Обратный звонок</option>
+                        <option value="newbuilding">Новостройки</option>
+                        <option value="project">Проект</option>
+                    </select>
+                </div>
+                <button onclick="testFullSubmission()">Отправить тест</button>
+                <div id="fullTestResult"></div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3><i>📝</i> Лог отправки</h3>
+            <div class="log" id="analyticsLog">
+                <div class="log-entry"><span class="timestamp">[Загрузка...]</span> Инициализация мониторинга</div>
+            </div>
+            <button onclick="clearLog()">Очистить лог</button>
+        </div>
+        
+        <div class="card">
+            <h3><i>🔗</i> Ссылки для проверки</h3>
+            <div class="links">
+                <a href="https://metrika.yandex.ru/dashboard?id=105466180" target="_blank">Панель Яндекс.Метрики</a>
+                <a href="https://analytics.google.com/analytics/web/" target="_blank">Панель Google Analytics</a>
+                <a href="https://fattoria.by/test_analytics.html" target="_blank">Тестовая страница форм</a>
+                <a href="https://fattoria.by/test_all_forms.html" target="_blank">Полная тестовая панель</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    // ========== ЛОГИРОВАНИЕ ==========
+    function addLog(message) {
+        const logDiv = document.getElementById('analyticsLog');
+        const timestamp = new Date().toLocaleTimeString();
+        const entry = document.createElement('div');
+        entry.className = 'log-entry';
+        entry.innerHTML = `<span class="timestamp">[${timestamp}]</span> ${message}`;
+        logDiv.appendChild(entry);
+        logDiv.scrollTop = logDiv.scrollHeight;
+    }
+    
+    // ========== ПРОВЕРКА СЧЕТЧИКОВ ==========
+    function checkYandexMetrika() {
+        const statusDiv = document.getElementById('yandexStatus');
+        if (typeof ym !== 'undefined') {
+            statusDiv.innerHTML = '✅ Онлайн';
+            statusDiv.className = 'status online';
+            addLog('Яндекс.Метрика: онлайн');
+            return true;
+        } else {
+            statusDiv.innerHTML = '❌ Оффлайн (ym не определен)';
+            statusDiv.className = 'status offline';
+            addLog('Яндекс.Метрика: оффлайн');
+            return false;
+        }
+    }
+    
+    function checkGoogleAnalytics() {
+        const statusDiv = document.getElementById('gaStatus');
+        if (typeof gtag !== 'undefined') {
+            statusDiv.innerHTML = '✅ Онлайн';
+            statusDiv.className = 'status online';
+            addLog('Google Analytics: онлайн');
+            return true;
+        } else {
+            statusDiv.innerHTML = '❌ Оффлайн (gtag не определен)';
+            statusDiv.className = 'status offline';
+            addLog('Google Analytics: оффлайн');
+            return false;
+        }
+    }
+    
+    // ========== ТЕСТ ЦЕЛЕЙ ==========
+    function testYandexGoal() {
+        const resultDiv = document.getElementById('yandexResult');
+        if (typeof ym !== 'undefined') {
+            try {
+                ym(105466180, 'reachGoal', 'TEST_GOAL', {
+                    test: true,
+                    page: 'monitor',
+                    timestamp: new Date().toISOString()
+                });
+                resultDiv.innerHTML = '<div class="status online">✅ Тестовая цель отправлена</div>';
+                addLog('Яндекс.Метрика: тестовая цель TEST_GOAL отправлена');
+            } catch (e) {
+                resultDiv.innerHTML = `<div class="status offline">❌ Ошибка: ${e.message}</div>`;
+                addLog('Яндекс.Метрика: ошибка отправки цели - ' + e.message);
+            }
+        } else {
+            resultDiv.innerHTML = '<div class="status offline">❌ Яндекс.Метрика не загружена</div>';
+            addLog('Яндекс.Метрика: счетчик не загружен для теста');
+        }
+    }
+    
+    function testGAEvent() {
+        const resultDiv = document.getElementById('gaResult');
+        if (typeof gtag !== 'undefined') {
+            try {
+                gtag('event', 'test_event', {
+                    'event_category': 'test',
+                    'event_label': 'monitor_test',
+                    'value': 1,
+                    'test_page': true
+                });
+                resultDiv.innerHTML = '<div class="status online">✅ Тестовое событие отправлено</div>';
+                addLog('Google Analytics: тестовое событие test_event отправлено');
+            } catch (e) {
+                resultDiv.innerHTML = `<div class="status offline">❌ Ошибка: ${e.message}</div>`;
+                addLog('Google Analytics: ошибка отправки события - ' + e.message);
+            }
+        } else {
+            resultDiv.innerHTML = '<div class="status offline">❌ Google Analytics не загружен</div>';
+            addLog('Google Analytics: счетчик не загружен для теста');
+        }
+    }
+    
+    // ========== ПОЛНЫЙ ТЕСТ ФОРМЫ ==========
+    async function testFullSubmission() {
+        const resultDiv = document.getElementById('fullTestResult');
+        resultDiv.innerHTML = '<div class="status warning">⏳ Отправка формы...</div>';
+        
+        const testData = {
+            name: document.getElementById('testName').value,
+            phone: document.getElementById('testPhone').value,
+            form_type: document.getElementById('testFormType').value,
+            source: 'analytics_monitor',
+            page_url: window.location.href
+        };
+        
+        try {
+            const response = await fetch('https://fattoria.by/api/submit-form-universal-fixed-v2.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(testData)
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                resultDiv.innerHTML = `
+                    <div class="status online">
+                        ✅ Форма отправлена успешно!<br><br>
+                        <strong>Аналитика:</strong><br>
+                        Яндекс.Метрика: ${data.analytics.yandex_metrika.status}<br>
+                        Google Analytics: ${data.analytics.google_analytics.status}<br><br>
+                        <strong>Уведомления:</strong><br>
+                        Telegram: ${data.notifications.telegram ? '✅' : '❌'}<br>
+                        Email: ${data.notifications.email ? '✅' : '❌'}
+                    </div>
+                `;
+                
+                addLog(`Форма отправлена: ${testData.form_type}, Яндекс: ${data.analytics.yandex_metrika.status}, Google: ${data.analytics.google_analytics.status}`);
+                
+                // ВЫПОЛНЯЕМ КОД АНАЛИТИКИ ИЗ ОТВЕТА
+                if (data.tracking_code) {
+                    executeAnalyticsCode(data.tracking_code);
+                }
+                
+                // Также отправляем напрямую из браузера (дублируем)
+                sendDirectAnalytics(testData);
+                
+            } else {
+                resultDiv.innerHTML = `<div class="status offline">❌ Ошибка отправки: ${data.message}</div>`;
+                addLog(`Ошибка отправки формы: ${data.message}`);
+            }
+            
+        } catch (error) {
+            resultDiv.innerHTML = `<div class="status offline">❌ Ошибка сети: ${error.message}</div>`;
+            addLog(`Сетевая ошибка при отправке формы: ${error.message}`);
+        }
+    }
+    
+    // ========== ОТПРАВКА АНАЛИТИКИ ==========
+    function executeAnalyticsCode(code) {
+        try {
+            // Удаляем теги <script>
+            const cleanCode = code.replace(/<script>|<\/script>/g, '');
+            
+            // Выполняем код
+            const script = document.createElement('script');
+            script.textContent = cleanCode;
+            document.head.appendChild(script);
+            
+            addLog('Код аналитики из API выполнен');
+            return true;
+        } catch (e) {
+            addLog('Ошибка выполнения кода аналитики: ' + e.message);
+            return false;
+        }
+    }
+    
+    function sendDirectAnalytics(formData) {
+        // Яндекс.Метрика
+        if (typeof ym !== 'undefined') {
+            try {
+                ym(105466180, 'reachGoal', 'FORM_SUBMIT', {
+                    form_type: formData.form_type,
+                    form_name: formData.name,
+                    phone: formData.phone,
+                    source: formData.source,
+                    page_url: formData.page_url,
+                    direct_send: true
+                });
+                addLog('Яндекс.Метрика: цель FORM_SUBMIT отправлена напрямую');
+            } catch (e) {
+                addLog('Ошибка Яндекс.Метрики: ' + e.message);
+            }
+        }
+        
+        // Google Analytics
+        if (typeof gtag !== 'undefined') {
+            try {
+                gtag('event', 'form_submit', {
+                    'event_category': 'form',
+                    'event_label': formData.form_type,
+                    'value': 1,
+                    'form_name': formData.name,
+                    'form_type': formData.form_type,
+                    'phone': formData.phone,
+                    'direct_send': true
+                });
+                addLog('Google Analytics: событие form_submit отправлено напрямую');
+            } catch (e) {
+                addLog('Ошибка Google Analytics: ' + e.message);
+            }
+        }
+    }
+    
+    // ========== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==========
+    function clearLog() {
+        document.getElementById('analyticsLog').innerHTML = 
+            '<div class="log-entry"><span class="timestamp">[' + new Date().toLocaleTimeString() + ']</span> Лог очищен</div>';
+        addLog('Лог очищен вручную');
+    }
+    
+    // ========== ИНИЦИАЛИЗАЦИЯ ==========
+    document.addEventListener('DOMContentLoaded', function() {
+        addLog('Мониторинг аналитики запущен');
+        
+        // Ждем загрузки счетчиков
+        setTimeout(() => {
+            checkYandexMetrika();
+            checkGoogleAnalytics();
+            
+            // Если счетчики не загрузились через 3 секунды - пробуем еще раз
+            setTimeout(() => {
+                if (!checkYandexMetrika() || !checkGoogleAnalytics()) {
+                    addLog('⚠️ Счетчики не загрузились. Возможно блокировка или медленная загрузка.');
+                }
+            }, 3000);
+            
+        }, 1000);
+        
+        // Периодическая проверка (каждые 30 секунд)
+        setInterval(() => {
+            checkYandexMetrika();
+            checkGoogleAnalytics();
+        }, 30000);
+    });
+    </script>
+</body>
+</html>

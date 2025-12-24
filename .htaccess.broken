@@ -1,0 +1,47 @@
+# Запретить доступ к логам и конфигам
+<FilesMatch "\.(log|txt|env|config|sql|bak|backup)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Запретить доступ к служебным файлам
+<FilesMatch "^(\.env|\.git|\.ht|config|composer|package)\.">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Разрешить доступ к API только через POST
+<FilesMatch "^submit-form">
+      <IfModule mod_rewrite.c>
+          RewriteEngine On
+          # Разрешить OPTIONS для CORS
+          RewriteCond %{REQUEST_METHOD} ^(OPTIONS)$ [OR]
+          # Разрешить POST
+          RewriteCond %{REQUEST_METHOD} ^(POST)$ [OR]
+          # Разрешить GET к существующим файлам
+          RewriteCond %{REQUEST_FILENAME} -f [OR]
+          RewriteCond %{REQUEST_FILENAME} -d
+          RewriteRule .* - [L]
+
+          # Запретить все остальные методы
+          RewriteRule .* - [F,L]
+      </IfModule>
+</FilesMatch>
+
+# Разрешить CORS для API
+<FilesMatch "^submit-form">
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "POST, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, X-Requested-With"
+</FilesMatch>
+
+# Запретить доступ к папкам
+Options -Indexes
+RedirectMatch 403 ^/logs/?$
+RedirectMatch 403 ^/backups/?$
+RedirectMatch 403 ^/node_modules/?$
+RedirectMatch 403 ^/api/?$
+
+# Принудительная кодировка UTF-8
+AddDefaultCharset UTF-8
+DefaultLanguage ru

@@ -1,0 +1,10 @@
+1. submit-form.php - Основная форма
+2. submit-newbuilding.php - Форма новостроек
+3. submit-test-drive.php - Форма тест-драйва
+4. submit-buyer.php - Форма для покупателей
+5. submit-seller.php - Форма для продавцов
+6. submit-footer.php - Форма в футере
+7. submit-modal.php - Модальная форма
+8. submit-project.php - Форма проекта
+9. submit-trust-callback.php - Форма обратного звонка
+10. submit-all-forms.php - Общий обработчик

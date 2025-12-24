@@ -1,0 +1,115 @@
+<?php
+// ИДЕАЛЬНЫЙ УНИВЕРСАЛЬНЫЙ ОБРАБОТЧИК ФОРМ
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+// Обработка preflight запросов
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+// Функция для логирования
+function log_debug($data) {
+    $log_file = __DIR__ . '/../form-debug-perfect.log';
+    file_put_contents($log_file, date('Y-m-d H:i:s') . " - " . $data . "\n", FILE_APPEND);
+}
+
+// Получаем сырые данные
+$raw_input = file_get_contents('php://input');
+$content_type = $_SERVER['CONTENT_TYPE'] ?? '';
+$method = $_SERVER['REQUEST_METHOD'];
+
+log_debug("=== НОВЫЙ ЗАПРОС ===");
+log_debug("Method: $method, Content-Type: $content_type");
+log_debug("Raw input: $raw_input");
+log_debug("POST array: " . print_r($_POST, true));
+
+// Парсим данные в зависимости от Content-Type
+$data = [];
+
+if (strpos($content_type, 'application/json') !== false) {
+    // JSON данные
+    $data = json_decode($raw_input, true) ?: [];
+    log_debug("Parsed as JSON: " . print_r($data, true));
+} elseif (strpos($content_type, 'application/x-www-form-urlencoded') !== false) {
+    // FormData
+    parse_str($raw_input, $data);
+    log_debug("Parsed as FormData: " . print_r($data, true));
+} elseif (strpos($content_type, 'multipart/form-data') !== false) {
+    // Multipart - уже в $_POST
+    $data = $_POST;
+    log_debug("Parsed as Multipart (from \$_POST): " . print_r($data, true));
+} elseif (!empty($_POST)) {
+    // Любой другой POST
+    $data = $_POST;
+    log_debug("Parsed from \$_POST: " . print_r($data, true));
+} elseif (!empty($raw_input)) {
+    // Пробуем как FormData
+    parse_str($raw_input, $data);
+    log_debug("Parsed as FormData (fallback): " . print_r($data, true));
+}
+
+// Извлекаем данные с поддержкой разных имен полей
+$name = $data['name'] ?? $data['user_name'] ?? $data['username'] ?? '';
+$phone = $data['phone'] ?? $data['telephone'] ?? $data['tel'] ?? $data['phone_number'] ?? '';
+$email = $data['email'] ?? $data['mail'] ?? $data['e-mail'] ?? '';
+$message = $data['message'] ?? $data['msg'] ?? $data['text'] ?? $data['comment'] ?? '';
+$source = $data['source'] ?? $data['formType'] ?? $data['form_type'] ?? 'unknown';
+
+log_debug("Extracted: name='$name', phone='$phone', email='$email', source='$source'");
+
+// Записываем в основной лог
+$log_entry = date('d.m.Y H:i:s') . "\t$name\t$phone\t$email\t$message\t$source\n";
+file_put_contents(__DIR__ . '/../form-final.log', $log_entry, FILE_APPEND);
+
+log_debug("Logged: $log_entry");
+
+// Отправляем email
+$email_sent = false;
+if (!empty($name) || !empty($phone) || !empty($email)) {
+    $to = "anfattoriya@gmail.com";
+    $subject = "Новая заявка с сайта fattoria.by: " . ($name ?: 'Без имени');
+    $email_body = "
+Новая заявка с сайта fattoria.by
+
+Имя: $name
+Телефон: $phone
+Email: $email
+Сообщение: $message
+Источник: $source
+Время: " . date('d.m.Y H:i:s') . "
+
+IP: " . ($_SERVER['HTTP_X_REAL_IP'] ?? $_SERVER['REMOTE_ADDR'] ?? 'неизвестен') . "
+User-Agent: " . ($_SERVER['HTTP_USER_AGENT'] ?? 'неизвестен') . "
+    ";
+    
+    $headers = "From: info@fattoria.by\r\n";
+    $headers .= "Reply-To: info@fattoria.by\r\n";
+    $headers .= "Content-Type: text/plain; charset=utf-8\r\n";
+    
+    $email_sent = mail($to, $subject, $email_body, $headers);
+    
+    // Логируем отправку email
+    $email_log_entry = date('d.m.Y H:i:s') . "\t$source\t$name\t$phone\t" . ($email_sent ? 'SENT' : 'FAILED') . "\n";
+    file_put_contents(__DIR__ . '/../email-send.log', $email_log_entry, FILE_APPEND);
+}
+
+// Возвращаем успешный ответ
+echo json_encode([
+    'success' => true,
+    'message' => 'Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.',
+    'timestamp' => date('d.m.Y H:i:s'),
+    'data_received' => [
+        'name' => $name,
+        'phone' => $phone,
+        'email' => $email,
+        'source' => $source
+    ],
+    'email_sent' => $email_sent
+], JSON_UNESCAPED_UNICODE);
+
+log_debug("Response sent successfully");
+?>

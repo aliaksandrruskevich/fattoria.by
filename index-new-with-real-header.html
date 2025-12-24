@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fattoria - Агентство недвижимости | Продажа и покупка недвижимости в Минске</title>
+    <meta name="description" content="Продажа и покупка квартир, домов, коммерческой недвижимости в Минске. Более 1000 успешных сделок. Бесплатная консультация.">
+    
+    <!-- Подключаем существующие стили для консистентности -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/index-combined.css">
+    
+    <!-- Дополнительные стили для новой структуры -->
+    <style>
+        /* Общие стили */
+        .section-padding {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 3rem;
+        }
+        
+        .btn-primary-custom {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
+        }
+        
+        /* Герой-секция */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 150px 0 100px;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+        
+        /* Форма обратной связи */
+        .contact-form {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .form-control-custom {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control-custom:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+        
+        /* Галерея квартир */
+        .apartment-card {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+        
+        .apartment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .apartment-img {
+            height: 250px;
+            object-fit: cover;
+            width: 100%;
+        }
+        
+        /* Блоки с изображением и текстом */
+        .feature-block {
+            margin-bottom: 80px;
+        }
+        
+        .feature-img {
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            height: 400px;
+            object-fit: cover;
+            width: 100%;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .hero-section {
+                padding: 100px 0 60px;
+                min-height: 70vh;
+            }
+            
+            .contact-form {
+                margin-top: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Хедер (используем существующий через JS или включаем статично) -->
+    <div id="header-placeholder"></div>
+    
+    <!-- ========== ПЕРВЫЙ БЛОК: ГЕРОЙ С ФОРМОЙ ========== -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="hero-title">Продать, купить, снять квартиру с нами — легко и выгодно</h1>
+                    <p class="hero-subtitle">Более 1000 успешных сделок. Профессиональное сопровождение, юридическая безопасность, лучшие условия на рынке.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#catalog" class="btn btn-primary-custom">
+                            <i class="fas fa-search me-2"></i>Найти квартиру
+                        </a>
+                        <a href="#contact-form" class="btn btn-outline-light">
+                            <i class="fas fa-phone-alt me-2"></i>Бесплатная консультация
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="contact-form" id="contact-form">
+                        <h3 class="mb-4" style="color: #2c3e50;">Оставьте заявку</h3>
+                        <p class="text-muted mb-4">Мы перезвоним вам в течение 15 минут</p>
+                        
+                        <form id="main-contact-form" action="/api/submit-form.php" method="POST">
+                            <input type="hidden" name="form_type" value="main_contact">
+                            
+                            <div class="mb-3">
+                                <input type="text" class="form-control form-control-custom" name="name" placeholder="Ваше имя" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <input type="tel" class="form-control form-control-custom" name="phone" placeholder="Ваш телефон" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <input type="email" class="form-control form-control-custom" name="email" placeholder="Ваш email">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <textarea class="form-control form-control-custom" name="message" rows="3" placeholder="Ваш вопрос или комментарий"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary-custom w-100">
+                                <i class="fas fa-paper-plane me-2"></i>Отправить заявку
+                            </button>
+                            
+                            <p class="text-muted small mt-3">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ========== ВТОРОЙ БЛОК: КАТАЛОГ КВАРТИР ========== -->
+    <section id="catalog" class="section-padding">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="section-title">Выберите лучшие квартиры для жизни в нашем каталоге</h2>
+                    <p class="section-subtitle">Квартиры в Минске, Минском районе</p>
+                    <p class="lead">Мы тщательно отбираем объекты, проверяем юридическую чистоту и предлагаем только лучшие варианты, соответствующие вашим критериям и бюджету.</p>
+                    
+                    <a href="/properties.html" class="btn btn-primary-custom btn-lg mt-3">
+                        <i class="fas fa-list me-2"></i>Перейти в полный каталог
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Галерея квартир -->
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="apartment-card">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="Современная квартира" class="apartment-img">
+                        <div class="p-3">
+                            <h5>2-комн. квартира</h5>
+                            <p class="text-muted">Центральный район, 65 м²</p>
+                            <p class="fw-bold text-primary">$185,000</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="apartment-card">
+                        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="Квартира с видом на город" class="apartment-img">
+                        <div class="p-3">
+                            <h5>3-комн. квартира</h5>
+                            <p class="text-muted">Фрунзенский район, 85 м²</p>
+                            <p class="fw-bold text-primary">$245,000</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="apartment-card">
+                        <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="Стильная квартира" class="apartment-img">
+                        <div class="p-3">
+                            <h5>1-комн. квартира</h5>
+                            <p class="text-muted">Первомайский район, 45 м²</p>
+                            <p class="fw-bold text-primary">$125,000</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="apartment-card">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="Просторная квартира" class="apartment-img">
+                        <div class="p-3">
+                            <h5>4-комн. квартира</h5>
+                            <p class="text-muted">Заводской район, 120 м²</p>
+                            <p class="fw-bold text-primary">$325,000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ========== ЧЕТВЕРТЫЙ БЛОК: ДОМА И УЧАСТКИ ========== -->
+    <section id="houses" class="section-padding bg-light">
+        <div class="container">
+            <div class="row align-items-center feature-block">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Дом за городом" class="feature-img">
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="section-title">Дома и участки для комфортной жизни за городом</h2>
+                    <p class="lead mb-4">Мечтаете о собственном доме за городом? Мы предлагаем широкий выбор домов и земельных участков в экологически чистых районах Минской области.</p>
+                    
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Участки с коммуникациями и без</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Дома под ключ и на стадии строительства</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Юридическое сопровождение сделок</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Помощь в получении ипотеки</li>
+                    </ul>
+                    
+                    <a href="/country-properties.html" class="btn btn-primary-custom mt-3">
+                        <i class="fas fa-home me-2"></i>Смотреть дома и участки
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ========== ПЯТЫЙ БЛОК: КОММЕРЧЕСКАЯ НЕДВИЖИМОСТЬ ========== -->
+    <section id="commercial" class="section-padding">
+        <div class="container">
+            <div class="row align-items-center feature-block">
+                <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+                    <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Коммерческая недвижимость" class="feature-img">
+                </div>
+                <div class="col-lg-6 order-lg-1">
+                    <h2 class="section-title">Коммерческая недвижимость для вашего бизнеса</h2>
+                    <p class="lead mb-4">Инвестируйте в прибыльные объекты коммерческой недвижимости. Мы помогаем подобрать оптимальные варианты для офиса, магазина, ресторана или склада.</p>
+                    
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-chart-line text-success me-2"></i>Высокая доходность инвестиций</li>
+                        <li class="mb-2"><i class="fas fa-map-marker-alt text-success me-2"></i>Выгодные локации с высокой проходимостью</li>
+                        <li class="mb-2"><i class="fas fa-file-contract text-success me-2"></i>Юридическая экспертиза объектов</li>
+                        <li class="mb-2"><i class="fas fa-calculator text-success me-2"></i>Анализ рентабельности инвестиций</li>
+                    </ul>
+                    
+                    <a href="/commercial-properties.html" class="btn btn-primary-custom mt-3">
+                        <i class="fas fa-building me-2"></i>Смотреть коммерческую недвижимость
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ========== ШЕСТОЙ БЛОК: ДЛЯ ПОКУПАТЕЛЯ ========== -->
+    <section id="for-buyers" class="section-padding bg-light">
+        <div class="container">
+            <div class="row align-items-center feature-block">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Семья с ключами" class="feature-img">
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="section-title">При покупке жилья нужно сделать правильный выбор с первого раза</h2>
+                    <p class="lead mb-4">Экономьте силы, время и деньги — полезная информация для покупателей. Мы поможем вам разобраться во всех нюансах покупки недвижимости.</p>
+                    
+                    <div class="mb-4">
+                        <h5><i class="fas fa-shield-alt text-primary me-2"></i>Юридическая безопасность</h5>
+                        <p>Проверка документов, анализ рисков, сопровождение сделки.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5><i class="fas fa-search-dollar text-primary me-2"></i>Поиск оптимального варианта</h5>
+                        <p>Учитываем все ваши пожелания и бюджетные ограничения.</p>
+                    </div>
+                    
+                    <a href="/services-buyers.html" class="btn btn-primary-custom">
+                        <i class="fas fa-user-check me-2"></i>В раздел для покупателя
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ========== СЕДЬМОЙ БЛОК: ДЛЯ ПРОДАВЦА ========== -->
+    <section id="for-sellers" class="section-padding">
+        <div class="container">
+            <div class="row align-items-center feature-block">
+                <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+                    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Продажа недвижимости" class="feature-img">
+                </div>
+                <div class="col-lg-6 order-lg-1">
+                    <h2 class="section-title">Продайте недвижимость быстро и выгодно</h2>
+                    <p class="lead mb-4">Мы знаем, как продать вашу квартиру или дом по максимальной цене в кратчайшие сроки. Профессиональная оценка, маркетинг и ведение переговоров.</p>
+                    
+                    <div class="mb-4">
+                        <h5><i class="fas fa-bullseye text-primary me-2"></i>Точная оценка стоимости</h5>
+                        <p>Анализ рынка и определение оптимальной цены для быстрой продажи.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5><i class="fas fa-ad text-primary me-2"></i>Эффективная реклама</h5>
+                        <p>Продвижение на всех популярных площадках, профессиональная фотосъемка.</p>
+                    </div>
+                    
+                    <a href="/services-sellers.html" class="btn btn-primary-custom">
+                        <i class="fas fa-user-tie me-2"></i>В раздел для продавца
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ========== ВОСЬМОЙ БЛОК: ВАКАНСИИ ========== -->
+    <section id="vacancies" class="section-padding bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="section-title">Присоединяйтесь к нашей команде</h2>
+                    <p class="lead mb-5">Мы постоянно растем и ищем талантливых специалистов в сфере недвижимости. Если вы амбициозны, целеустремленны и любите работать с людьми — ждем ваше резюме!</p>
+                    
+                    <div class="row text-start mb-5">
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h4 class="card-title">Агент по недвижимости</h4>
+                                    <p class="card-text">Работа с клиентами, поиск и показ объектов, сопровождение сделок.</p>
+                                    <p><i class="fas fa-map-marker-alt text-muted me-2"></i>Минск, офис и удаленно</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h4 class="card-title">Менеджер по продажам</h4>
+                                    <p class="card-text">Привлечение новых клиентов, консультации, ведение переговоров.</p>
+                                    <p><i class="fas fa-map-marker-alt text-muted me-2"></i>Минск, офис</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#contact-form" class="btn btn-primary-custom btn-lg">
+                        <i class="fas fa-paper-plane me-2"></i>Откликнуться на вакансию
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ========== ДЕВЯТЫЙ БЛОК: НАШ ОТДЫХ ========== -->
+    <section id="team" class="section-padding">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="section-title">Наша команда — наша семья</h2>
+                    <p class="lead">Мы не только работаем вместе, но и отдыхаем, празднуем успехи, поддерживаем друг друга. Такая атмосфера помогает нам лучше понимать клиентов и эффективнее работать.</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                         alt="Корпоратив" class="img-fluid rounded shadow" style="height: 250px; width: 100%; object-fit: cover;">
+                </div>
+                <div class="col-md-4 mb-4">
+                    <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                         alt="Тренинг" class="img-fluid rounded shadow" style="height: 250px; width: 100%; object-fit: cover;">
+                </div>
+                <div class="col-md-4 mb-4">
+                    <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                         alt="Отдых на природе" class="img-fluid rounded shadow" style="height: 250px; width: 100%; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ========== ДЕСЯТЫЙ БЛОК: О КОМПАНИИ ========== -->
+    <section id="about" class="section-padding bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="section-title">О компании Fattoria</h2>
+                    <p class="lead mb-4">Мы — профессиональное агентство недвижимости с более чем 10-летним опытом работы на рынке Беларуси.</p>
+                    
+                    <p>Наша миссия — помогать людям находить свой идеальный дом и совершать безопасные, выгодные сделки с недвижимостью. Мы ценим доверие наших клиентов и стремимся к долгосрочным партнерским отношениям.</p>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="fas fa-handshake fa-lg"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">Более 1000</h5>
+                                    <p class="text-muted mb-0">успешных сделок</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="fas fa-users fa-lg"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">15+</h5>
+                                    <p class="text-muted mb-0">профессионалов в команде</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <img src="https://images.unsplash.com/photo-1568992688065-536aad8a12f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Наш офис" class="img-fluid rounded shadow" style="height: 400px; width: 100%; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Футер (будет загружен через JS) -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- Подключаем существующие скрипты -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Скрипт для загрузки хедера и футера -->
+    <script>

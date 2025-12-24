@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Фаттория бай - Агентство недвижимости Минск</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/index-combined.css.disabled">
+  <style>
+    body { padding-top: 20px; background: #f8f9fa; }
+    .container { max-width: 1200px; }
+    .card { height: 100%; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+    .card-img-top { height: 200px; object-fit: cover; }
+    .card-body { display: flex; flex-direction: column; }
+    .card-text { flex-grow: 1; }
+    h1 { color: #333; margin-bottom: 20px; }
+    h2 { color: #666; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div class="container">
+    <h1 class="text-center">Агентство недвижимости Фаттория в Минске</h1>
+    <h2 class="text-center">Продажа и аренда квартир, домов, коммерческой недвижимости</h2>
+    
+    <div class="row mt-5">
+      <!-- Карточка 1 -->
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card">
+          <img src="/images/optimized/foto19.webp" class="card-img-top" alt="Новостройки">
+          <div class="card-body">
+            <h3 class="card-title">Новостройки</h3>
+            <p class="card-text">Современные жилые комплексы с отделкой от застройщиков</p>
+            <a href="/new-buildings" class="btn btn-primary">Смотреть</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Карточка 2 -->
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card">
+          <img src="/images/optimized/foto19.webp" class="card-img-top" alt="Наши объекты">
+          <div class="card-body">
+            <h3 class="card-title">Наши объекты</h3>
+            <p class="card-text">Лучшие предложения от нашего агентства</p>
+            <a href="/properties" class="btn btn-primary">Смотреть</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Карточка 3 -->
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=870&q=80" class="card-img-top" alt="Коммерческая">
+          <div class="card-body">
+            <h3 class="card-title">Коммерческая</h3>
+            <p class="card-text">Помещения для бизнеса и инвестиций</p>
+            <a href="/commercial-properties" class="btn btn-primary">Смотреть</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Карточка 4 -->
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card">
+          <img src="/images/optimized/foto20.webp" class="card-img-top" alt="Загородная">
+          <div class="card-body">
+            <h3 class="card-title">Загородная</h3>
+            <p class="card-text">Дома, коттеджи и участки за городом</p>
+            <a href="/country-properties" class="btn btn-primary">Смотреть</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    console.log("Страница загружена. Карточек: " + document.querySelectorAll('.card').length);
+  </script>
+  <div id="footer-placeholder"></div>
+  <!-- FOOTER START -->
+  <!-- FOOTER END -->
+</body>
+</html>
+<script>
+// Упрощенная загрузка header
+fetch('/includes/header.html')
+  .then(r => r.text())
+  .then(html => {
+    document.getElementById('header-placeholder').innerHTML = html;
+  })
+  .catch(e => console.log('Header не загружен:', e));
+</script>
+<!-- Объединенный футер с формой и контактами -->
+<footer class="combined-footer" id="contact">
+  <div class="container py-5">
+    <!-- Форма обратной связи -->
+    <div class="row mb-5">
+      <div class="col-12 text-center">
+        <h2 class="mb-4" data-aos="fade-up">Найдите свою идеальную недвижимость</h2>
+        <form class="row g-2 justify-content-center" id="feedbackFormBottom">
+          <div class="col-md-3"><input type="text" class="form-control" name="name" placeholder="Имя" required></div>
+          <div class="col-md-3"><input type="tel" class="form-control" name="phone" placeholder="Телефон" required></div>
+          <div class="col-md-4"><input type="text" class="form-control" name="request" placeholder="Что вы ищете?" required></div>
+          <div class="col-md-2"><button type="submit" class="btn btn-warning w-100">Отправить</button></div>
+          <div class="col-12 text-center mt-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="agreeBottom" required>
+              <label class="form-check-label small" for="agreeBottom">
+                Соглашаюсь с обработкой персональных данных
+              </label>
+            </div>
+          </div>
+        </form>
+        <script src="/js/forms.js"></script>
+      </div>
+    </div>
+
+    <!-- Контакты и соцсети -->
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Fattoria.by</h4>
+        <p>Ваш надежный партнер в мире недвижимости</p>
+        <div class="contact-info">
+          <p><i class="fas fa-phone me-2"></i> +375 (29) 638-00-53</p>
+          <p><i class="fas fa-envelope me-2"></i>anfattoriya@gmail.com</p>
+          <p><i class="fas fa-map-marker-alt me-2"></i> Минск, Беларусь</p>
+        </div>
+        <div class="mt-4">
+          <h5>Лицензия</h5>
+          <p><small>Лицензия на осуществление деятельности № 02240/446 от 11.07.2022</small></p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h5>Мы в социальных сетях</h5>
+        <div class="social-links">
+          <a href="https://wa.me/375447025267" target="_blank" rel="noopener noreferrer" class="text-white me-3">
+            <i class="fab fa-whatsapp fa-2x"></i>
+          </a>
+          <a href="https://t.me/fattoriaminsk" target="_blank" rel="noopener noreferrer" class="text-white me-3">
+            <i class="fab fa-telegram fa-2x"></i>
+          </a>
+          <a href="https://www.instagram.com/an_fattoria?igsh=MTkwN2g0M2ExdnUzcw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" class="text-white me-3">
+            <i class="fab fa-instagram fa-2x"></i>
+          </a>
+          <a href="https://www.facebook.com/share/198kUiDUJY/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="text-white">
+            <i class="fab fa-facebook fa-2x"></i>
+          </a>
+        </div>
+        <div class="mt-4">
+          <h5>Как нас найти</h5>
+          <div class="mt-3">
+            <p>г. Минск, ул. Репина, д. 4, пом. 458. </p>
+            <p>Пн-Пт: 9:00-21:00, Сб: 10:00-18:00, Вс: выходной</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="my-4">
+    <div class="text-center">
+      <p>&copy; 2025 Fattoria.by. Все права защищены.</p>
+      <p><small>
+        <a href="#" onclick="showPrivacyModal(); return false;" style="color: inherit; text-decoration: underline;">Политика конфиденциальности</a> |
+        <a href="/user-agreement" style="color: inherit; text-decoration: underline;">Пользовательское соглашение</a> |
+        <a href="/cookie-policy" style="color: inherit; text-decoration: underline;">Политика cookie</a>
+      </small></p>
+    </div>
+  </div>
+</footer>
+
+<script src="/snow-only.js"></script>
