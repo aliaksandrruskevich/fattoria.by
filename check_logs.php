@@ -1,52 +1,93 @@
 <?php
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
+/**
+ * Проверка логов форм
+ * Обновленная версия
+ */
 
-$action = $_GET['action'] ?? 'status';
+header('Content-Type: text/html; charset=utf-8');
+echo "<!DOCTYPE html><html><head><title>Проверка логов форм</title>";
+echo "<style>body{font-family:monospace;margin:20px} pre{background:#f5f5f5;padding:10px}</style>";
+echo "</head><body><h2>Логи отправки форм</h2>";
 
-switch ($action) {
-    case 'status':
-        $status = [
-            'api' => 'online',
-            'telegram' => file_exists('telegram-send.log') ? 'active' : 'inactive',
-            'email' => file_exists('email-final.log') ? 'active' : 'inactive',
-            'forms' => file_exists('form-final.log') ? 'active' : 'inactive',
-            'timestamp' => date('Y-m-d H:i:s')
-        ];
-        echo json_encode($status);
-        break;
+$log_dir = '/home/fattoriaby/public_html/';
+$logs = [
+    'form-final.log' => 'Все заявки',
+    'telegram-send.log' => 'Статусы Telegram',
+    'form-errors.log' => 'Ошибки'
+];
+
+foreach ($logs as $file => $description) {
+    $path = $log_dir . $file;
+    echo "<h3>$description ($file)</h3>";
+    
+    if (file_exists($path)) {
+        $size = filesize($path);
+        $lines = file($path);
+        $count = count($lines);
         
-    case 'recent_forms':
-        $log_file = 'form-final.log';
-        $lines = [];
+        echo "<p>Размер: " . round($size/1024, 2) . " KB, Строк: $count</p>";
         
-        if (file_exists($log_file)) {
-            $content = file($log_file, FILE_IGNORE_NEW_LINES);
-            $lines = array_slice($content, -20); // Последние 20 записей
+        if ($count > 0) {
+            echo "<h4>Последние 10 записей:</h4>";
+            echo "<pre>";
+            $recent = array_slice($lines, -10);
+            foreach ($recent as $line) {
+                echo htmlspecialchars($line);
+            }
+            echo "</pre>";
+            
+            // Статистика за сегодня
+            $today = date('d.m.Y');
+            $today_count = 0;
+            foreach ($lines as $line) {
+                if (strpos($line, $today) === 0) {
+                    $today_count++;
+                }
+            }
+            echo "<p>Заявок сегодня ($today): $today_count</p>";
+        } else {
+            echo "<p>Лог пуст</p>";
         }
-        
-        echo json_encode([
-            'count' => count($lines),
-            'forms' => $lines,
-            'total' => count(file($log_file, FILE_IGNORE_NEW_LINES)) ?? 0
-        ]);
-        break;
-        
-    case 'telegram_logs':
-        $log_file = 'telegram-send.log';
-        $lines = [];
-        
-        if (file_exists($log_file)) {
-            $content = file($log_file, FILE_IGNORE_NEW_LINES);
-            $lines = array_slice($content, -10);
-        }
-        
-        echo json_encode([
-            'telegram' => $lines
-        ]);
-        break;
-        
-    default:
-        echo json_encode(['error' => 'Invalid action']);
+    } else {
+        echo "<p>Файл не найден</p>";
+    }
+    
+    echo "<hr>";
 }
+
+// Общая статистика
+echo "<h3>Общая статистика</h3>";
+$form_log = $log_dir . 'form-final.log';
+if (file_exists($form_log)) {
+    $lines = file($form_log);
+    $total = count($lines);
+    
+    // Подсчет по формам
+    $forms = [];
+    foreach ($lines as $line) {
+        $parts = explode("\t", $line);
+        if (count($parts) >= 4) {
+            $form_type = trim($parts[3]);
+            if ($form_type) {
+                $forms[$form_type] = ($forms[$form_type] ?? 0) + 1;
+            }
+        }
+    }
+    
+    echo "<p>Всего заявок: $total</p>";
+    
+    if (!empty($forms)) {
+        echo "<p>Распределение по формам:</p>";
+        echo "<ul>";
+        arsort($forms);
+        foreach ($forms as $form => $count) {
+            $percent = round(($count / $total) * 100, 1);
+            echo "<li>$form: $count ($percent%)</li>";
+        }
+        echo "</ul>";
+    }
+}
+
+echo "<p><a href='check_forms.php'>← Проверить эндпоинты</a></p>";
+echo "</body></html>";
 ?>

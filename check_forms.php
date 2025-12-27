@@ -1,66 +1,121 @@
 <?php
-echo "<h2>Проверка работы форм на fattoria.by</h2>";
+/**
+ * Проверка работоспособности всех обработчиков форм
+ * Обновленная версия для новых эндпоинтов
+ */
+
+header('Content-Type: text/html; charset=utf-8');
+echo "<!DOCTYPE html><html><head><title>Проверка форм</title>";
+echo "<style>body{font-family:monospace;margin:20px} .ok{color:green} .error{color:red} table{border-collapse:collapse} td,th{border:1px solid #ccc;padding:5px}</style>";
+echo "</head><body><h2>Проверка обработчиков форм fattoria.by</h2>";
+echo "<p>Время проверки: " . date('d.m.Y H:i:s') . "</p>";
+
+// Функция для тестирования эндпоинта
+function test_endpoint($name, $url, $data) {
+    echo "<tr><td>$name</td><td>$url</td>";
+    
+    $start = microtime(true);
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    
+    $response = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+    
+    $time = round((microtime(true) - $start) * 1000, 1);
+    
+    if ($http_code == 200) {
+        $json = json_decode($response, true);
+        if ($json && isset($json['success'])) {
+            $telegram = isset($json['telegram_sent']) ? $json['telegram_sent'] : 
+                       (isset($json['details']['telegram_sent']) ? $json['details']['telegram_sent'] : null);
+            $email = isset($json['email_sent']) ? $json['email_sent'] :
+                    (isset($json['details']['email_sent']) ? $json['details']['email_sent'] : null);
+            
+            echo "<td class='ok'>✅ Успех</td>";
+            echo "<td>{$time}мс</td>";
+            echo "<td>" . ($telegram === true ? '✅' : ($telegram === false ? '❌' : '—')) . "</td>";
+            echo "<td>" . ($email === true ? '✅' : ($email === false ? '❌' : '—')) . "</td>";
+            echo "<td>" . htmlspecialchars(substr($response, 0, 100)) . "...</td>";
+        } else {
+            echo "<td class='error'>❌ Невалидный JSON</td>";
+            echo "<td>{$time}мс</td><td>—</td><td>—</td>";
+            echo "<td>" . htmlspecialchars(substr($response, 0, 100)) . "...</td>";
+        }
+    } else {
+        echo "<td class='error'>❌ HTTP $http_code</td>";
+        echo "<td>{$time}мс</td><td>—</td><td>—</td>";
+        echo "<td>" . htmlspecialchars($error) . "</td>";
+    }
+    
+    echo "</tr>";
+}
+
+// Тестовые данные
+$test_data = [
+    'name' => 'Тест проверки',
+    'phone' => '+37529111' . rand(1000, 9999),
+    'email' => 'test@example.com',
+    'form_type' => 'health_check',
+    'page_url' => 'https://fattoria.by/check_forms.php'
+];
+
+echo "<table><tr><th>Эндпоинт</th><th>URL</th><th>Статус</th><th>Время</th><th>Telegram</th><th>Email</th><th>Ответ</th></tr>";
+
+// Тестируем все эндпоинты
+$endpoints = [
+    ['Основной (универсальный)', '/api/submit-form-universal.php'],
+    ['V2 совместимый', '/api/submit-form-universal-fixed-v2.php'],
+    ['V3 совместимый', '/api/submit-form-universal-fixed-v3.php'],
+    ['Финальный', '/api/submit-form-universal-fixed-final.php'],
+    ['Мастер', '/api/submit-form.php'],
+    ['Старый universal-final', '/api/submit-form-universal-final.php']
+];
+
+foreach ($endpoints as $endpoint) {
+    test_endpoint($endpoint[0], 'https://fattoria.by' . $endpoint[1], $test_data);
+}
+
+echo "</table>";
 
 // Проверка логов
-echo "<h3>Логи email отправки:</h3>";
-if (file_exists('../email-send.log')) {
-    $email_logs = file('../email-send.log');
-    echo "<pre>";
-    echo "Всего записей: " . count($email_logs) . "\n\n";
-    echo "Последние 5 записей:\n";
-    echo implode("", array_slice($email_logs, -5));
-    echo "</pre>";
-} else {
-    echo "<p style='color: red;'>Файл email-send.log не найден!</p>";
-}
+echo "<h3>Статус логов:</h3>";
+echo "<ul>";
+$logs = [
+    'form-final.log' => '/home/fattoriaby/public_html/form-final.log',
+    'telegram-send.log' => '/home/fattoriaby/public_html/telegram-send.log',
+    'form-errors.log' => '/home/fattoriaby/public_html/form-errors.log'
+];
 
-echo "<h3>Логи Google Sheets:</h3>";
-if (file_exists('../google-send.log')) {
-    $google_logs = file('../google-send.log');
-    $success_count = 0;
-    $error_count = 0;
-    
-    foreach ($google_logs as $line) {
-        if (strpos($line, '"success"') !== false) {
-            $success_count++;
-        } else {
-            $error_count++;
-        }
-    }
-    
-    echo "<p>Успешных отправок: <strong>$success_count</strong></p>";
-    echo "<p>Ошибок: <strong>$error_count</strong></p>";
-    echo "<p>Всего записей: <strong>" . count($google_logs) . "</strong></p>";
-}
-
-echo "<h3>Логи форм (form-final.log):</h3>";
-if (file_exists('../form-final.log')) {
-    $form_logs = file('../form-final.log');
-    echo "<p>Всего заявок: <strong>" . count($form_logs) . "</strong></p>";
-    
-    // Последние заявки
-    echo "<h4>Последние 3 заявки:</h4>";
-    echo "<pre>";
-    echo implode("", array_slice($form_logs, -3));
-    echo "</pre>";
-}
-
-echo "<h3>Тест отправки email:</h3>";
-echo '<form method="post">
-    <input type="hidden" name="test_email" value="1">
-    <button type="submit">Отправить тестовый email</button>
-</form>';
-
-if (isset($_POST['test_email'])) {
-    $to = 'anfattoriya@gmail.com';
-    $subject = 'Тест из панели проверки: ' . date('d.m.Y H:i:s');
-    $message = 'Тестовое сообщение из панели проверки работы форм.';
-    $headers = "From: noreply@fattoria.by\r\n";
-    
-    if (mail($to, $subject, $message, $headers)) {
-        echo "<p style='color: green;'>✅ Тестовый email отправлен на $to</p>";
+foreach ($logs as $name => $path) {
+    if (file_exists($path)) {
+        $size = filesize($path);
+        $lines = count(file($path));
+        $modified = date('d.m.Y H:i:s', filemtime($path));
+        echo "<li>$name: {$lines} строк, " . round($size/1024, 2) . " KB, изменен: $modified</li>";
     } else {
-        echo "<p style='color: red;'>❌ Ошибка отправки тестового email</p>";
+        echo "<li>$name: ❌ не найден</li>";
     }
 }
+echo "</ul>";
+
+// Последние заявки
+echo "<h3>Последние 5 заявок:</h3>";
+if (file_exists($logs['form-final.log'])) {
+    $lines = file($logs['form-final.log']);
+    $recent = array_slice($lines, -5);
+    echo "<pre>";
+    foreach ($recent as $line) {
+        echo htmlspecialchars($line);
+    }
+    echo "</pre>";
+}
+
+echo "</body></html>";
 ?>

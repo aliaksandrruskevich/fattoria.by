@@ -1,79 +1,110 @@
 <?php
+/**
+ * УНИВЕРСАЛЬНЫЙ ОБРАБОТЧИК ФОРМ ДЛЯ FATTORIA.BY
+ * Основной скрипт для всех форм
+ */
+
 header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
 
-$input_data = file_get_contents('php://input');
-$request_id = md5($_SERVER['REMOTE_ADDR'] . $input_data);
-$lock_file = "/tmp/form_lock_$request_id";
+// Конфигурация
+define('TELEGRAM_TOKEN', '8554923032:AAFkZ0jvKuNBIUUpZrRf1IX6allzl2PWgpU');
+define('TELEGRAM_CHAT_ID', '8138312997');
+define('ADMIN_EMAIL', 'anfattoriya@gmail.com');
+define('FORM_LOG', '/home/fattoriaby/public_html/form-final.log');
+define('TELEGRAM_LOG', '/home/fattoriaby/public_html/telegram-send.log');
 
-if (file_exists($lock_file)) {
-    $lock_time = filemtime($lock_file);
-    if (time() - $lock_time < 5) {
-        echo json_encode(['success' => false, 'message' => 'Подождите 5 секунд']);
-        exit;
-    }
-    unlink($lock_file);
-}
-touch($lock_file);
+// Получаем данные из всех возможных источников
+$input = file_get_contents('php://input');
+$json_data = json_decode($input, true);
+$data = $json_data ?: $_POST;
 
-$data = json_decode($input_data, true) ?: $_POST;
-$script_name = basename($_SERVER['PHP_SELF'], '.php');
-$form_type = str_replace('submit-', '', $script_name);
+// Нормализация имен полей
+$name = trim($data['name'] ?? $data['userName'] ?? $data['firstName'] ?? $data['username'] ?? '');
+$phone = trim($data['phone'] ?? $data['userPhone'] ?? $data['mobile'] ?? $data['telephone'] ?? $data['tel'] ?? '');
+$email = trim($data['email'] ?? $data['userEmail'] ?? $data['e-mail'] ?? $data['mail'] ?? '');
+$form_type = $data['form_type'] ?? $data['form_name'] ?? $data['type'] ?? $data['source'] ?? 'universal';
+$page_url = $data['page_url'] ?? $data['page'] ?? ($_SERVER['HTTP_REFERER'] ?? '');
+$ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 
-$name = trim($data['name'] ?? '');
-$phone = trim($data['phone'] ?? '');
-$email = trim($data['email'] ?? '');
-
+// Валидация
 if (empty($phone)) {
-    unlink($lock_file);
-    echo json_encode(['success' => false, 'message' => 'Укажите телефон']);
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Телефон обязателен']);
     exit;
 }
 
-$timestamp = date('d.m.Y H:i:s');
+// Логирование заявки
+$log_entry = date('d.m.Y H:i:s') . "\t$name\t$phone\t$form_type\t$page_url\tIP:$ip\n";
+file_put_contents(FORM_LOG, $log_entry, FILE_APPEND);
 
-// Логи
-file_put_contents(__DIR__ . '/../form-final.log', 
-    "$timestamp\t$name\t$phone\t$email\t" . ($data['message'] ?? '') . "\t" . ($data['source'] ?? '') . "\n", 
-    FILE_APPEND);
+// Отправка в Telegram
+$telegram_sent = false;
+if (TELEGRAM_TOKEN && TELEGRAM_CHAT_ID) {
+    $message = "📋 <b>Новая заявка с сайта</b>\n\n";
+    $message .= "👤 <b>Имя:</b> " . ($name ?: 'не указано') . "\n";
+    $message .= "📞 <b>Телефон:</b> $phone\n";
+    if ($email) $message .= "📧 <b>Email:</b> $email\n";
+    if ($form_type && $form_type != 'universal') $message .= "📝 <b>Форма:</b> $form_type\n";
+    if ($page_url) $message .= "🔗 <b>Страница:</b> " . substr($page_url, 0, 50) . "\n";
+    $message .= "🌐 <b>IP:</b> $ip\n";
+    $message .= "🕐 <b>Время:</b> " . date('d.m.Y H:i:s');
+    
+    $telegram_url = "https://api.telegram.org/bot" . TELEGRAM_TOKEN . "/sendMessage";
+    $post_data = [
+        'chat_id' => TELEGRAM_CHAT_ID,
+        'text' => $message,
+        'parse_mode' => 'HTML'
+    ];
+    
+    $ch = curl_init($telegram_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    
+    $response = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    
+    $telegram_sent = ($http_code == 200);
+    
+    // Логируем результат Telegram
+    $tg_log = date('d.m.Y H:i:s') . "\tmaster\t" . 
+              ($telegram_sent ? 'SUCCESS' : "FAILED:$http_code") . "\t" .
+              "$phone\t$form_type\n";
+    file_put_contents(TELEGRAM_LOG, $tg_log, FILE_APPEND);
+}
 
-// Telegram
-$telegram_token = "8554923032:AAFkZ0jvKuNBIUUpZrRf1IX6allzl2PWgpU";
-$telegram_chat_id = "8138312997";
-$telegram_text = "✅ Новая заявка с сайта fattoria.by%0A%0A👤 Имя: $name%0A📞 Телефон: $phone%0A📧 Email: " . ($email ?: "не указан") . "%0A📝 Форма: $form_type%0A🕒 Время: $timestamp%0A🌐 Страница: " . ($data['source'] ?? 'не указана');
-$telegram_url = "https://api.telegram.org/bot{$telegram_token}/sendMessage?chat_id={$telegram_chat_id}&text={$telegram_text}&parse_mode=HTML";
-@file_get_contents($telegram_url);
-file_put_contents(__DIR__ . '/../telegram-send.log', "$timestamp\tTelegram sent\n", FILE_APPEND);
+// Email отправка (упрощенная реализация)
+$email_sent = false;
+if (ADMIN_EMAIL && $email) {
+    $subject = "Новая заявка с сайта fattoria.by";
+    $email_message = "Имя: $name\n";
+    $email_message .= "Телефон: $phone\n";
+    $email_message .= "Email: $email\n";
+    $email_message .= "Форма: $form_type\n";
+    $email_message .= "Страница: $page_url\n";
+    $email_message .= "IP: $ip\n";
+    $email_message .= "Время: " . date('d.m.Y H:i:s');
+    
+    $headers = "From: no-reply@fattoria.by\r\n";
+    $headers .= "Reply-To: $email\r\n";
+    
+    $email_sent = @mail(ADMIN_EMAIL, $subject, $email_message, $headers);
+}
 
-// Google Sheets
-$google_url = "https://script.google.com/macros/s/AKfycbxWu2KdWiLNapj5ywD2lSqkQLFF17so5jEyjLYXrrcnY-SUjjVPHsZuwohhRyfXjSd5/exec";
-$google_data = ['timestamp' => $timestamp, 'name' => $name, 'phone' => $phone, 'email' => $email, 'form_type' => $form_type, 'source' => $data['source'] ?? 'fattoria.by'];
-$ch = curl_init($google_url);
-curl_setopt_array($ch, [
-    CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => http_build_query($google_data),
-    CURLOPT_RETURNTRANSFER => false,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_SSL_VERIFYPEER => false,
-    CURLOPT_TIMEOUT => 3
-]);
-curl_exec($ch);
-curl_close($ch);
-file_put_contents(__DIR__ . '/../google-forms-final.log', "$timestamp\tGOOGLE API SENT: $name, $phone, $form_type\n", FILE_APPEND);
-
-// Email
-$to = "anfattoriya@gmail.com";
-$subject = "Заявка с fattoria.by: $name";
-$body = "Имя: $name\nТелефон: $phone\nEmail: " . ($email ?: "не указан") . "\nФорма: $form_type\nИсточник: " . ($data['source'] ?? 'не указан') . "\nВремя: $timestamp";
-$headers = "From: info@fattoria.by\r\n";
-@mail($to, $subject, $body, $headers);
-file_put_contents(__DIR__ . '/../email-final.log', "$timestamp\tEMAIL SENT: $name, $phone, $form_type\n", FILE_APPEND);
-
-// Ответ (ТОЛЬКО ОДИН JSON!)
+// Ответ для фронтенда и мониторинга
 echo json_encode([
     'success' => true,
-    'message' => 'Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.'
-], JSON_UNESCAPED_UNICODE);
-
-// Cleanup
-exec("sleep 10 && rm -f '$lock_file' 2>/dev/null &");
+    'message' => 'Ваша заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.',
+    'details' => [
+        'telegram_sent' => $telegram_sent,
+        'email_sent' => $email_sent,
+        'form_type' => $form_type,
+        'timestamp' => date('Y-m-d H:i:s')
+    ],
+    'version' => 'master-1.0'
+]);
 ?>

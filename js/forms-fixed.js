@@ -50,7 +50,7 @@ function showQuickConsultForm(project) {
     
     console.log('📤 Sending quick consultation:', {name, phone, project});
     
-    fetch('/api/submit-newbuilding.php', {
+    fetch('/api/submit-form.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({

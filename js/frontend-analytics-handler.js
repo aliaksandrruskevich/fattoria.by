@@ -5,7 +5,7 @@
 
 class FormAnalyticsHandler {
     constructor() {
-        this.apiEndpoint = 'https://fattoria.by/api/submit-form-universal-fixed-v2.php';
+        this.apiEndpoint = 'https://fattoria.by/api/submit-form.php';
         this.init();
     }
     
