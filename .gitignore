@@ -23,3 +23,6 @@ inventory_*.txt
 # Конфиденциальное
 .env*
 [yandex_client_id]
+*.log.gz
+*.log
+error_log
